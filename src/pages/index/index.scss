@@ -1,0 +1,28 @@
+.food_class{
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  height: 100%;
+  background-color: #1f7e6f;
+  float: left;
+  .food_class_list{
+    display: block;
+    width: 200px;
+    height: 80px;
+    text-align: center;
+    line-height: 48px;
+    font-size: 40px;
+  }
+}
+.food{
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  height: 100%;
+  float: right;
+  .food_list{
+      width: 400px;
+      height: 250px;
+      font-size: 30px;
+  }
+}

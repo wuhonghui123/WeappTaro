@@ -1,0 +1,12 @@
+.cata{
+  display: flex;
+  flex-direction: column;
+  .cata_name{
+    display: block;
+    width: 100px;
+    height: 48px;
+    text-align: center;
+    line-height: 48px;
+    font-size: 14px;
+  }
+}
