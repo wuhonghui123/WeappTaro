@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: '22222'
+  navigationBarTitleText: '添加地址'
 })

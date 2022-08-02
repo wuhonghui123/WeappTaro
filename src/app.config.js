@@ -34,6 +34,12 @@ export default defineAppConfig({
       ]
     },
     {
+      "root": "pages/mycomment/",
+      "pages": [
+        "index"
+      ]
+    },
+    {
       "root": "pages/foodinfo/",
       "pages": [
         "index"
