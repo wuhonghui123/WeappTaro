@@ -22,6 +22,18 @@ export default defineAppConfig({
       ]
     },
     {
+      "root": "pages/myaddress/",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "pages/Addaddress/",
+      "pages": [
+        "index"
+      ]
+    },
+    {
       "root": "pages/foodinfo/",
       "pages": [
         "index"
