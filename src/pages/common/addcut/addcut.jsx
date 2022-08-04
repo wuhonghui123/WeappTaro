@@ -47,8 +47,8 @@ class AddCut extends Component {
         let hideClass=Num>0?"":"hide";
         return (
             <View className="addcut">
-                <Image   className={"opeate_img "+hideClass} src={cutpng}></Image>
-                <Text className={"food_num "+hideClass}>{Num}</Text>
+                <Image   className={"opeate_img"} src={cutpng}></Image>
+                <Text className={"food_num "}>{Num}</Text>
                 <Image  className="opeate_img" src={addpng}></Image>
             </View>
         );

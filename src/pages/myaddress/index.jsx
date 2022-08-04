@@ -17,8 +17,8 @@ class myaddress extends Component {
 
   componentDidHide() {
   }
-  handClick(){
-    Taro.reLaunch({
+  handClick(value){
+    Taro.navigateTo({
       url: '/pages/Addaddress/index'
     });
   }
@@ -27,7 +27,7 @@ class myaddress extends Component {
   render() {
     return (
       <View>
-        <AtButton  className="myaddress" onClick={this.handClick}>
+        <AtButton  className="myaddress" onClick={this.handClick.bind(this)}>
           <Text className="text">添加地址信息</Text>
         </AtButton>
       </View>

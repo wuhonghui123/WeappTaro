@@ -97,6 +97,7 @@ class Index extends Component {
         this.setState({
           foodList: res.data.data
         })
+        console.log(JSON.stringify(this.state.foodList));
       },
     });
   }

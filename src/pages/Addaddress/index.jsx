@@ -6,7 +6,7 @@ import { AtGrid } from "taro-ui"
 import Taro from "@tarojs/taro";
 import { AtButton } from 'taro-ui'
 import { AtInput, AtForm } from 'taro-ui'
-import "./index.scss"
+// import "./index.scss"
 
 export class Addaddress extends Component {
   constructor () {
