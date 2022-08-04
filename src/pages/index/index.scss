@@ -10,19 +10,44 @@
     width: 200px;
     height: 80px;
     text-align: center;
-    line-height: 48px;
-    font-size: 40px;
+    line-height: 28px;
+    font-size: 20px;
   }
 }
 .food{
   display: flex;
   flex-direction: column;
-  width: 75%;
+  width: 94%;
   height: 100%;
   float: right;
   .food_list{
       width: 400px;
       height: 250px;
       font-size: 30px;
+  }
+}
+.foodlist_item{
+  margin-top: 15PX;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  .foodlist_item_info{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    font-size: 14PX;
+    margin-left: 10PX;
+    height: 80PX;
+    justify-content: space-between;
+    .price{
+      color:red;
+      font-weight: bold;
+    }
+  }
+  .foodlist_item_img{
+    width: 80PX;
+    height: 80PX;
+    border-radius: 4PX;
   }
 }

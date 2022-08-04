@@ -20,14 +20,46 @@ class My extends Component {
     console.log("tabBar ====" +value);
     switch (value.value) {
       case '我的地址':
-        Taro.reLaunch({
+        Taro.navigateTo({
           url: '/pages/myaddress/index'
         });
         break;
       case '我的评论':
-        Taro.reLaunch({
+        Taro.navigateTo({
           url: '/pages/mycomment/index'
         });
+        break;
+      case '获取code':
+        Taro.login({
+          success: function (res) {
+            if (res.code) {
+              console.log(res);
+              //发起网络请求
+              Taro.request({
+                url: 'https://test.com/onLogin',
+                data: {
+                  code: res.code
+                }
+              })
+            } else {
+              console.log('登录失败！' + res.errMsg)
+            }
+          }
+        })
+        break;
+      case '获取用户信息':
+        Taro.getUserProfile({
+          desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+          success: (res) => {
+            console.log(res);
+            console.log(res.userInfo.avatarUrl);
+            // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+            this.setState({
+              userInfo: res.userInfo,
+              hasUserInfo: true
+            })
+          }
+        })
         break;
       // case 2:
       //   Taro.reLaunch({
@@ -47,7 +79,7 @@ class My extends Component {
   render() {
     return (
       <View>
-        <AtAvatar circle image='https://jdc.jd.com/img/200'></AtAvatar>
+        <AtAvatar className={"+"} circle image='https://thirdwx.qlogo.cn/mmopen/vi_32/ceibQWQJRaYABM23ibFIU1fMC7kwKT7FxLto4suoeq3gCZeaeiatHh0ZhPFIfiaTQl2yibou6ZgGKU580gWhxsiaWrrg/132'></AtAvatar>
         name
 
         <AtGrid data={
@@ -70,11 +102,11 @@ class My extends Component {
             },
             {
               image: 'https://img14.360buyimg.com/jdphoto/s72x72_jfs/t17251/336/1311038817/3177/72595a07/5ac44618Na1db7b09.png',
-              value: '领京豆'
+              value: '获取code'
             },
             {
               image: 'https://img30.360buyimg.com/jdphoto/s72x72_jfs/t5770/97/5184449507/2423/294d5f95/595c3b4dNbc6bc95d.png',
-              value: '手机馆'
+              value: '获取用户信息'
             }
           ]
         }
