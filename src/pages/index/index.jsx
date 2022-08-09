@@ -109,7 +109,6 @@ class Index extends Component {
         // const List = this.props.food;
         let Item = this.state.tabList;
         let List = this.state.foodList;
-        console.log('菜品:',List);
         return (
 
             <View>
@@ -164,7 +163,7 @@ class Index extends Component {
                                                                             <View
                                                                                   className="foodlist_item">
                                                                                 <Image className="foodlist_item_img"
-                                                                                       src={img} onClick={this.handleClick2.bind(this,JSON.stringify(food))}/>
+                                                                                       src={food.food_img} onClick={this.handleClick2.bind(this,JSON.stringify(food))}/>
                                                                                 <View className="foodlist_item_info">
                                                                                     <Text
                                                                                         onClick={this.handleClick2.bind(this,JSON.stringify(food))}>{food.name}</Text>
