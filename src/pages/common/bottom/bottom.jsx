@@ -2,6 +2,7 @@ import  {Component}  from  'react';
 import {View,Text,Image} from '@tarojs/components';
 import  {getAllFoodInfo,getEvent}  from  '../../../utils/common';
 import './bottom.scss';
+import img from "../../../assets/img/add.png"
 let events=getEvent();
 class  Bottom  extends  Component{
     constructor(){
@@ -30,7 +31,7 @@ class  Bottom  extends  Component{
         return  (<View className="bottom">
             <View className="bottom_body">
                 {Num?<Text className="num">{Num}</Text>:null}
-                <Image className="store_img" src={Num?require('../../assets/img/foodstore.png'):require('../../assets/img/emptystore.png')}></Image>
+                <Image className="store_img" src={img}></Image>
                 <View className="info">{allPrice?<Text className="price">{"¥"+allPrice}</Text>:<Text>{sendPrice?"另需配送费¥"+sendPrice+" | ":""}</Text>}<Text>{supportTakeBySelf?"支持自取":"不支持自取"}</Text></View>
                 <View className="submit">{allPrice>=sendMustPrice?<Text className="goPay">去结算</Text>:<Text>{sendMustPrice?"¥"+sendMustPrice+"起送":""}</Text>}</View>
             </View>

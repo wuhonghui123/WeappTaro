@@ -7,13 +7,14 @@ import img from '../../assets/img/1.jpg'
 import img2 from '../../assets/img/2.jpg'
 import './index.scss'
 import Addcut from "../common/addcut/addcut";
-
-
+import {connect} from "react-redux";
+import {findfood} from "../../actions/food";
+@connect(({food}) => ({food}), {findfood})
 class Index extends Component {
-    handleClick2(item) {
-        console.log('点击了', item);
+    handleClick2(food,e) {
+        console.log('点击了', food);
         Taro.navigateTo({
-            url: `/pages/foodinfo/index?name=1`
+            url: `/pages/foodinfo/index?food=${food}`
         })
     }
 
@@ -31,14 +32,15 @@ class Index extends Component {
         })
     }
 
-    constructor() {
-        super(...arguments);
+    constructor(props) {
+        super(props);
         this.state = {
             current: 0,
             current1: 0,
-            foodList: [],
+            foodList:[],
             currentList: [],
             tabList: [],
+            userinfo:[]
         }
     }
 
@@ -53,8 +55,24 @@ class Index extends Component {
     }
 
     componentDidMount() {
+        // this.setState({
+        //     userinfo:Taro.getStorageSync("userinfo")
+        // })
+        // console.log( this.state.userinfo)
+        // Taro.getStorage({
+        //     key: 'userinfo',
+        //     success: function (res) {
+        //         console.log("缓存取出来",res.data)
+        //         const userInfo = res.data;
+        //         this.setState((userInfo) => ({
+        //             userinfo: userInfo
+        //         }));
+        //     }
+        // })
+        // console.log(this.state.userinfo);
         Taro.request({
             url: `https://g6.glypro19.com/weappapi/food/classification_list`,
+            // url: 'http://127.0.0.1:8095/food/list',
             header: {
                 'content-type': 'application/json' // 默认值
             },
@@ -88,9 +106,12 @@ class Index extends Component {
     }
 
     render() {
+        // const List = this.props.food;
         let Item = this.state.tabList;
         let List = this.state.foodList;
+        console.log('菜品:',List);
         return (
+
             <View>
                 <View>
                     <Swiper
@@ -101,13 +122,13 @@ class Index extends Component {
                         indicatorDots
                         autoplay>
                         <SwiperItem>
-                            <View className='demo-text-1'><Image src={img}/></View>
+                            <View ><Image src={img} className="loop_img"/></View>
                         </SwiperItem>
                         <SwiperItem>
-                            <View className='demo-text-2'><Image src={img2}/></View>
+                            <View ><Image src={img2} className="loop_img"/></View>
                         </SwiperItem>
                         <SwiperItem>
-                            <View className='demo-text-3'>图片3</View>
+                            <View >图片3</View>
                         </SwiperItem>
                     </Swiper>
                     <AtTabs
@@ -143,10 +164,10 @@ class Index extends Component {
                                                                             <View
                                                                                   className="foodlist_item">
                                                                                 <Image className="foodlist_item_img"
-                                                                                       src={img}/>
+                                                                                       src={img} onClick={this.handleClick2.bind(this,JSON.stringify(food))}/>
                                                                                 <View className="foodlist_item_info">
                                                                                     <Text
-                                                                                        onClick={this.handleClick2.bind(food)}>{food.name}</Text>
+                                                                                        onClick={this.handleClick2.bind(this,JSON.stringify(food))}>{food.name}</Text>
                                                                                     <Text>月售：{food.sole}</Text>
                                                                                     <Text
                                                                                         className="price">¥{food.price}</Text>

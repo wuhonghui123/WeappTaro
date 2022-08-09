@@ -10,7 +10,7 @@ class My extends Component {
     constructor (props) {
         super(props);
         this.state = {
-          userInfo:{},
+          userInfo:[],
           name:'',
           hasUserInfo:false,
           avatarUrl:'https://jdc.jd.com/img/200'
@@ -21,10 +21,13 @@ class My extends Component {
     componentWillUnmount() {
     }
     componentWillMount(){
-        Taro.getStorage({
+        Taro.getStorageSync({
             key: 'userinfo',
             success: function (res) {
                 console.log("缓存取出来",res.data)
+                this.setState({
+                    userInfo:res.data
+                })
             }
         })
     }
@@ -38,11 +41,6 @@ class My extends Component {
         Taro.getUserProfile({
                 desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
                 success: (res) => {
-                    // console.log(res);
-                    // this.setState({
-                    //     avatarUrl:res.userInfo.avatarUrl,
-                    //     name:res.userInfo.nickName
-                    // })
                     console.log(res.userInfo.nickName)
                     console.log(res.rawData)
                     this.setState({
@@ -55,8 +53,6 @@ class My extends Component {
                         data: res.userInfo
                     })
                     // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-
-
                 }
 
             }
@@ -64,63 +60,31 @@ class My extends Component {
     }
 
     handleClick(value) {
-        // console.log("tabBar ====" + value);
-        // switch (value.value) {
-        //     case '我的地址':
-        //         Taro.navigateTo({
-        //             url: '/pages/myaddress/index'
-        //         });
-        //         break;
-        //     case '我的评论':
-        //         Taro.navigateTo({
-        //             url: '/pages/mycomment/index'
-        //         });
-        //         break;
-        //     case '获取code':
-        //         Taro.login({
-        //             success: function (res) {
-        //                 if (res.code) {
-        //                     console.log(res);
-        //                     //发起网络请求
-        //                     Taro.request({
-        //                         url: 'https://test.com/onLogin',
-        //                         data: {
-        //                             code: res.code
-        //                         }
-        //                     })
-        //                 } else {
-        //                     console.log('登录失败！' + res.errMsg)
-        //                 }
-        //             }
-        //         })
-        //         break;
-        //     case '获取用户信息':
-        //         Taro.getUserProfile({
-        //             desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-        //             success: (res) => {
-        //                 console.log(res);
-        //                 console.log(res.userInfo.avatarUrl);
-        //                 // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-        //                 this.setState({
-        //                     userInfo: res.userInfo,
-        //                     hasUserInfo: true
-        //                 })
-        //             }
-        //         })
-        //         break;
-        //     // case 2:
-        //     //   Taro.reLaunch({
-        //     //     url: '/pages/order/index' //'/pages/physicalIdentity/healthKnowledge'
-        //     //   });
-        //     //   break;
-        //     // case 3:
-        //     //   Taro.reLaunch({
-        //     //     url: '/pages/homePage/index'
-        //     //   });
-        //     //   break;
-        //     default:
-        //         break;
-        // }
+        console.log("tabBar ====" + value);
+        switch (value.value) {
+            case '我的地址':
+                Taro.navigateTo({
+                    url: '/pages/myaddress/index'
+                });
+                break;
+            case '我的评论':
+                Taro.navigateTo({
+                    url: '/pages/mycomment/index'
+                });
+                break;
+            case 2:
+              Taro.navigateTo({
+                url: '/pages/order/index' //'/pages/physicalIdentity/healthKnowledge'
+              });
+              break;
+            case 3:
+              Taro.navigateTo({
+                url: '/pages/homePage/index'
+              });
+              break;
+            default:
+                break;
+        }
     }
 
     render() {
