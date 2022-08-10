@@ -1,8 +1,7 @@
 import {Component} from "react";
-import {Checkbox, Text, View} from "@tarojs/components";
+import {Checkbox, Image, Text, View} from "@tarojs/components";
 import React from "react";
 import { AtInputNumber,AtCheckbox } from 'taro-ui';
-
 
 
 class ShopCartComponent extends Component {
@@ -10,7 +9,7 @@ class ShopCartComponent extends Component {
         super(props);
         this.state = {
             shopCartList: this.props.shopCartList,
-            value:this.props.shopCartList.food_num,
+            value:this.props.shopCartList.Num,
             index:this.props.index,
             check:this.props.shopCartList.check
         }
@@ -41,17 +40,19 @@ class ShopCartComponent extends Component {
 
     render()
         {
-            this.props.shopCartList.food_num=this.state.value;
-              console.log("输出",this.state.value,this.state.shopCartList);
+            // this.props.shopCartList.Num=this.state.value;
+            const food=this.state.shopCartList;
+               console.log("输出",this.state.value,this.state.shopCartList);
             return (
-                    <View style={{float:'left',border: '1px dashed #ccc',width:'100%',height:'100px'} }>
-                            <Checkbox  checked={this.state.check} value={this.props.shopCartList.food_name} onClick={this.changeCheck.bind(this)}>
-                            </Checkbox>
-                        <Text>商品：{this.props.shopCartList.food_name}</Text>
-                        {/*<img src={require('../img/img.png')} alt={"图片"}>*/}
-                        {/*</img>*/}
-                        <hr/>
-                          <Text>总价：{this.props.shopCartList.food_price}</Text>
+                    <View style={{float:'left',border: '1px dashed #ccc',width:'100%',height:'150px'} }>
+                                <Checkbox  style={{float:"left"}} checked={this.state.check} value={this.props.shopCartList.name} onClick={this.changeCheck.bind(this)}>
+                                </Checkbox>
+                        <Text style={{float:"left"}}>商品：{this.props.shopCartList.name}</Text>
+                        <Text>单价：{this.props.shopCartList.price}</Text>
+
+                        <Image src={this.state.shopCartList.food_img} alt={"图片"} style={{position:'relative' ,width:"50%",height:'80%',}}>
+                        </Image>
+                      <View style={{float:'right'}}>
                             <AtInputNumber
                                 min={0}
                                 max={10}
@@ -59,6 +60,7 @@ class ShopCartComponent extends Component {
                                 value={this.state.value}
                                 onChange={this.handleChange.bind(this)}
                             />
+                        </View>
                     </View>
 
             )
