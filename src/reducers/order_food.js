@@ -1,20 +1,14 @@
-
 const INITIAL_STATE = {
-    shopCartList: []
+    orderFoodList: []
 }
 
 export default function shopCart(previousState = INITIAL_STATE, action) {
-    let {type,shopCartList}=action;
+    let {type,orderFoodList}=action;
     switch (type) {
-        case 'searchShopCart':
+        case 'AddOrderFoodList':
             return {
                 ...previousState,
-                shopCartList: shopCartList.data.data
-            };
-        case 'deleteShopCart':
-
-            return {
-                ...previousState,
+                orderFoodList: orderFoodList
             };
         default:
             return previousState;

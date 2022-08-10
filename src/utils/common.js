@@ -3,7 +3,7 @@
 //{food.id:{菜品信息 Num},   }
 import  Taro from '@tarojs/taro';
 import  Event  from  './events';
-const  foodKey="taro_meituan";
+const  foodKey="shopCart";
 const  myEvent=new Event();//实例化一个事件管理器
 export function  getFoodCount(food){
 	let store=Taro.getStorageSync(foodKey);
@@ -58,6 +58,7 @@ export  function  getAllFoodInfo(){
 	let allNum=0;
 	let store= Taro.getStorageSync(foodKey);//取菜品信息
 	if(store){
+		console.log(store);
 		//对store进行遍历
 		Object.keys(store).map((key)=>{
 			if(store[key]){

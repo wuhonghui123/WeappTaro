@@ -37,7 +37,7 @@
     flex-direction: column;
     flex-grow: 1;
     font-size: 14PX;
-    margin-left: 10PX;
+    margin-left: -70PX;
     height: 80PX;
     justify-content: space-between;
     .price{
@@ -46,8 +46,12 @@
     }
   }
   .foodlist_item_img{
-    width: 80PX;
+    width: 150PX;
     height: 80PX;
     border-radius: 4PX;
   }
+}
+.loop_img{
+    width: 800px;
+    height: 280px;
 }
