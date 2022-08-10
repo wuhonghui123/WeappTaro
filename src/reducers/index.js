@@ -9,7 +9,6 @@ export default combineReducers({
   counter,
   shopCart,
   orderList,
-  shopCart,
   order_food,
   food
 })
