@@ -18,7 +18,6 @@ class Index extends Component {
   handleClick(value) {
     this.setState({
       current: value,
-
     })
   }
   handleClick1(value) {

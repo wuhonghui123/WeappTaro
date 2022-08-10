@@ -4,9 +4,11 @@ import { View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import {connect} from "react-redux";
 import {findShopCart} from "../../actions/shopcart";
+import {findOrderList} from "../../actions/orderList";
 
 
 @connect(({shopCart}) => ({shopCart}), {findShopCart})
+
 class TabBar extends Component {
   constructor(props) {
     super(props);
