@@ -82,6 +82,20 @@ class My extends Component {
                 url: '/pages/homePage/index'
               });
               break;
+            case '获取用户地址':
+                Taro.chooseAddress({
+                    success: function (res) {
+                        console.log(res.userName)
+                        console.log(res.postalCode)
+                        console.log(res.provinceName)
+                        console.log(res.cityName)
+                        console.log(res.countyName)
+                        console.log(res.detailInfo)
+                        console.log(res.nationalCode)
+                        console.log(res.telNumber)
+                    }
+                })
+                break;
             default:
                 break;
         }
@@ -123,7 +137,7 @@ class My extends Component {
                         },
                         {
                             image: 'https://img30.360buyimg.com/jdphoto/s72x72_jfs/t5770/97/5184449507/2423/294d5f95/595c3b4dNbc6bc95d.png',
-                            value: '获取用户信息'
+                            value: '获取用户地址'
                         }
                     ]
                 }

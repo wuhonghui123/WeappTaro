@@ -9,7 +9,9 @@ import './index.scss'
 import Addcut from "../common/addcut/addcut";
 import {connect} from "react-redux";
 import {findfood} from "../../actions/food";
-@connect(({food}) => ({food}), {findfood})
+import {findfoodclass} from "../../actions/foodclass"
+@connect(({food}) => ({food}), findfood)
+@connect(({foodClass}) => ({foodClass}), findfoodclass)
 class Index extends Component {
     handleClick2(food,e) {
         console.log('点击了', food);
@@ -37,8 +39,6 @@ class Index extends Component {
         this.state = {
             current: 0,
             current1: 0,
-            foodList:[],
-            currentList: [],
             tabList: [],
             userinfo:[]
         }
@@ -55,60 +55,14 @@ class Index extends Component {
     }
 
     componentDidMount() {
-        // this.setState({
-        //     userinfo:Taro.getStorageSync("userinfo")
-        // })
-        // console.log( this.state.userinfo)
-        // Taro.getStorage({
-        //     key: 'userinfo',
-        //     success: function (res) {
-        //         console.log("缓存取出来",res.data)
-        //         const userInfo = res.data;
-        //         this.setState((userInfo) => ({
-        //             userinfo: userInfo
-        //         }));
-        //     }
-        // })
-        // console.log(this.state.userinfo);
-        Taro.request({
-            url: `https://g6.glypro19.com/weappapi/food/classification_list`,
-            // url: 'http://127.0.0.1:8095/food/list',
-            header: {
-                'content-type': 'application/json' // 默认值
-            },
-            method: 'GET',
-            dataType: 'json',
-            credentials: 'include',
-            success: (res) => {
-                this.setState({
-                    tabList: res.data.data
-                })
-            },
-        });
-        Taro.request({
-            url: `https://g6.glypro19.com/weappapi/food/list`,
-            header: {
-                'content-type': 'application/json' // 默认值
-            },
-            method: 'GET',
-            dataType: 'json',
-            credentials: 'include',
-            success: (res) => {
-                // console.log(res.data.data);
-                this.setState({
-                    foodList: res.data.data
-                })
-            },
-        });
     }
 
     componentDidHide() {
     }
 
     render() {
-        // const List = this.props.food;
-        let Item = this.state.tabList;
-        let List = this.state.foodList;
+        let Item = this.props.foodClass.foodClassList;
+        let List = this.props.food.foodList;
         return (
 
             <View>
@@ -147,7 +101,7 @@ class Index extends Component {
                                     height='685px'
                                     tabDirection='vertical'
                                     swipeable={true}
-                                    tabList={this.state.tabList}
+                                    tabList={this.props.foodClass.foodClassList}
                                     onClick={this.handleClick.bind(this)}>
                                     {
                                         Item.map((item, index) => {

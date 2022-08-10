@@ -1,35 +1,27 @@
 import { Component } from 'react'
-import { View, Text } from '@tarojs/components'
+import {View, Text, Image} from '@tarojs/components'
 import {AtTabs, AtTabsPane} from "taro-ui";
 import {getCurrentInstance} from "@tarojs/taro";
-
+import './index.scss'
+import Addcut from "../common/addcut/addcut";
 
 class foodinfo extends Component {
   constructor () {
     super(...arguments)
     this.state = {
         current: 0,
-            name:'',
-            id:'',
-            price:'',
-            food_img:'',
-            like_num:'',
-            class_name:'',
-            sale:''
+        // foodinfo:[],
+        //     name:'',
+        //     id:'',
+        //     price:'',
+        //     food_img:'',
+        //     like_num:'',
+        //     class_name:'',
+        //     sale:'',
+        food:JSON.parse(getCurrentInstance().router.params.food)
     }
   }
     componentDidMount() {
-        const food = JSON.parse(getCurrentInstance().router.params.food)
-        console.log(food);
-        this.setState({
-            name:food.name,
-            id:food.id,
-            price:food.price,
-            food_img:food.food_img,
-            like_num:food.like_num,
-            class_name:food.class_name,
-            sale:food.sale
-        })
     }
 
     handleClick (value) {
@@ -38,9 +30,10 @@ class foodinfo extends Component {
     })
   }
   render () {
-    return (
+      console.log(this.state.food);
+      return (
         <AtTabs
-            animated={false}
+            animated={true}
             current={this.state.current}
             tabList={[
               { title: '详情' },
@@ -48,10 +41,17 @@ class foodinfo extends Component {
             ]}
             onClick={this.handleClick.bind(this)}>
           <AtTabsPane current={this.state.current} index={0} >
-            <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;' >{this.state.name}</View>
+              <View className="foodinfo">
+              <Image className="food_img" src={this.state.food.food_img}/>
+            <View>{this.state.name}{this.state.food.name}</View>
+
+              <Addcut className="addcut" food={this.state.food}></Addcut>
+
+
+              </View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
-            <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>标签页二的内容</View>
+            <View>标签页二的内容</View>
           </AtTabsPane>
         </AtTabs>
     )
