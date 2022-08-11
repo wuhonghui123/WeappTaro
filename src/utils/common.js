@@ -49,6 +49,7 @@ export function  setFoodCount(food,Num,type,callBack){
 		}
 	}
 }
+
 export  function  getEvent(){
 	return  myEvent
 }

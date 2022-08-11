@@ -3,15 +3,17 @@ import {View, Text, SwiperItem, Swiper, Image} from '@tarojs/components'
 import TabBar from "../common/tabBar";
 import Taro from "@tarojs/taro";
 import {AtTabs, AtTabsPane} from "taro-ui";
-import { AtCard } from "taro-ui";
-import { AtRate } from 'taro-ui'
 import img from '../../assets/img/1.jpg'
 import img2 from '../../assets/img/2.jpg'
 import './index.scss'
 import Addcut from "../common/addcut/addcut";
 import {connect} from "react-redux";
 import {findfood} from "../../actions/food";
-@connect(({food}) => ({food}), {findfood})
+import {findfoodclass} from "../../actions/foodclass"
+import {findcommend} from "../../actions/commend";
+@connect(({food}) => ({food}), findfood)
+@connect(({foodClass}) => ({foodClass}), findfoodclass)
+@connect(({commend}) => ({commend}), findcommend)
 class Index extends Component {
     handleClick2(food,e) {
         console.log('点击了', food);
@@ -47,7 +49,6 @@ class Index extends Component {
             value: []
         }
     }
-
 
     componentWillReceiveProps(nextProps) {
         console.log(this.props, nextProps)
@@ -127,9 +128,9 @@ class Index extends Component {
     }
 
     render() {
-        // const List = this.props.food;
-        let Item = this.state.tabList;
-        let List = this.state.foodList;
+        let Item = this.props.foodClass.foodClassList;
+        let List = this.props.food.foodList;
+        console.log(this.props.commend.foodList);
         let commend = this.state.commendList;
         return (
 
