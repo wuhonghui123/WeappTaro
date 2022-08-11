@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Checkbox, Image, Text, View} from '@tarojs/components'
+import {Checkbox, Text, View} from '@tarojs/components'
 import TabBar from "../common/tabBar";
 import {connect} from "react-redux";
 import {deleteShopCart, findShopCart} from "../../actions/shopcart";
@@ -8,7 +8,8 @@ import React from "react";
 import order_food from "../../reducers/order_food";
 import {AddOrderFood} from "../../actions/order_food";
 import Taro from "@tarojs/taro";
-import Addcut from "../common/addcut/addcut";
+import {AtSwipeAction} from "taro-ui";
+import AddCut from "../common/addcut/addcut";
 
 
 @connect(({shopCart,order_food}) => ({shopCart,order_food}), {findShopCart,deleteShopCart,AddOrderFood})
@@ -19,21 +20,19 @@ class ShopCart extends Component {
             num:1,
             delBut:true,
             management:"管理",
-            shopCartList:this.props.shopCart.shopCartList,
+            shopCartList:Taro.getStorageSync("shopCart"),
             allCheck:false,
             money:0,
-
         }
     }
 
     //结算外卖
     settlement(){
-        console.log("结算外卖");
+        console.log("结算外卖")
         let mon=0;
-        const shopCartTr = this.state.shopCartList.map((shopCart, index) => {
+        const shopCartTr =Object.values(this.state.shopCartList).map((shopCart, index) => {
             if(shopCart.check==="true") {
-                mon+=shopCart.food_num * shopCart.food_price;
-                this.props.AddOrderFood(shopCart);
+                mon+=shopCart.Num * shopCart.price;
             }
         })
         this.state.money=mon;
@@ -63,28 +62,35 @@ class ShopCart extends Component {
     //全选
     allCheck(){
         if(this.state.allCheck==="true"){
-            this.setState({
-                allCheck:"false"
+            this.state.allCheck="false"
+            Object.values(this.state.shopCartList).map((shopCart, index) =>{
+                this.state.shopCartList[shopCart.id].check="false"
+                /*index=shopCart.id
+                this.setState({
+                    ...this.state.shopCartList,
+                    [index]:{
+                        check: "false"
+                   }
+                })*/
             })
-            this.state.shopCartList.filter((item)=>{
-                item.check="false"
-            })
-            console.log("真kk",this.state.allCheck,this.state.shopCartList);
+
         }else{
-            this.state.shopCartList.filter((item)=>{
-                item.check="true"
+            this.state.allCheck="true"
+            Object.values(this.state.shopCartList).map((shopCart, index) =>{
+                this.state.shopCartList[shopCart.id].check="true"
+                index=shopCart.id
+                /*this.setState({
+                    ...this.state.shopCartList,
+                    [index]:{
+                        check: "true"
+                    }
+                })*/
             })
-            this.state.shopCartList.map((shopCart, index) => {
-                this.state.shopCartList[index].check= "true"})
-            this.setState({
-                allCheck:"true"
-            })
-            console.log("假tt",this.state.allCheck,this.state.shopCartList);
         }
-        this.setState({
-            ...this.state.shopCartList,
-            shopCartList:this.state.shopCartList,
-        })
+        this.setState({})
+        console.log(this.state.allCheck,this.state.shopCartList);
+        Taro.setStorageSync("shopCart",this.state.shopCartList);
+
     }
     //管理按钮
     management(){
@@ -102,21 +108,25 @@ class ShopCart extends Component {
     }
     //删除按钮
     delShopCart=()=>{
-        console.log("删除");
-        this.state.shopCartList.map((shopCart, index) => {
-            if(shopCart.check=="true") {
-                this.props.deleteShopCart(shopCart);
+        Object.values(this.state.shopCartList).map((shopCart, index) =>{
+            if(shopCart.check==="true") {
+                let id=shopCart.id
+                delete this.state.shopCartList[id]
             }
+        })
+        Taro.setStorageSync("shopCart",this.state.shopCartList);
+        this.setState({
         })
     }
 
     render() {
-
-        console.log("购物车",this.state.allCheck);
-        const shopCartTr = this.state.shopCartList.map((shopCart, index) => {
+        const shopCartTr = Object.values(this.state.shopCartList).map((shopCart, index) =>{
             return(
                 <View>
                     <ShopCartComponent index={index} shopCartList={shopCart} changeShopCartList={this.changeShopCartList} changeCheck={this.changeCheck} />
+                    <AddCut food={ShopCart}>
+
+                    </AddCut>
                 </View>
             )
         })
@@ -125,7 +135,7 @@ class ShopCart extends Component {
 
         return (
             <View>
-                <Checkbox checked={this.state.allCheck} value='全选' onClick={this.allCheck.bind(this)} >全选</Checkbox>
+                <Checkbox checked='{this.state.allCheck}' value='全选' onClick={this.allCheck.bind(this)} >全选</Checkbox>
                 <button style={styleBut} onClick={this.management.bind(this)} >{this.state.management}</button>
                 <hr/>
                 <View>
@@ -135,6 +145,24 @@ class ShopCart extends Component {
 
                 <button style={{width:"50%",height:'100%',float:"left" }} disabled={this.state.delBut} onClick={this.delShopCart} >删除</button>
                 <TabBar tabBarCurrent={1} />
+                <View>
+                    <AtSwipeAction options={[
+                        {
+                            text: '取消',
+                            style: {
+                                backgroundColor: '#6190E8'
+                            }
+                        },
+                        {
+                            text: '确认',
+                            style: {
+                                backgroundColor: '#FF4949'
+                            }
+                        }
+                    ]}>
+                        <View className='normal'>{shopCartTr}</View>
+                    </AtSwipeAction>
+                </View>
             </View>
         )
     }
