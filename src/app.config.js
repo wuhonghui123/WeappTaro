@@ -12,7 +12,8 @@ export default defineAppConfig({
     {
       "root": "pages/order/",
       "pages": [
-        "index"
+        'index',
+          'test'
       ]
     },
     {
@@ -50,6 +51,6 @@ export default defineAppConfig({
       "pages": [
         "index"
       ]
-    },
+    }
   ]
 })
