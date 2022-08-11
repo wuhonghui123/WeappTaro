@@ -1,7 +1,8 @@
 import { Component } from 'react'
 import { View, Text } from '@tarojs/components'
 import {AtTabs, AtTabsPane} from "taro-ui";
-import {getCurrentInstance} from "@tarojs/taro";
+import { AtRate } from 'taro-ui'
+import Taro, {getCurrentInstance} from "@tarojs/taro";
 
 
 class foodinfo extends Component {
@@ -15,7 +16,8 @@ class foodinfo extends Component {
             food_img:'',
             like_num:'',
             class_name:'',
-            sale:''
+            sale:'',
+            value: []
     }
   }
     componentDidMount() {
@@ -37,6 +39,24 @@ class foodinfo extends Component {
       current: value
     })
   }
+    componentDidMount() {
+        Taro.request({
+            url: `https://g6.glypro19.com/weappapi/commend/list`,
+            header: {
+                'content-type': 'application/json' // 默认值
+            },
+            method: 'GET',
+            dataType: 'json',
+            credentials: 'include',
+            success: (res) => {
+                // console.log(res.data.data);
+                this.setState({
+                    commendList: res.data.data
+                })
+            },
+        });
+    }
+
   render () {
     return (
         <AtTabs
