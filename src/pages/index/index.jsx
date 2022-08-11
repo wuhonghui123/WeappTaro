@@ -3,6 +3,8 @@ import {View, Text, SwiperItem, Swiper, Image} from '@tarojs/components'
 import TabBar from "../common/tabBar";
 import Taro from "@tarojs/taro";
 import {AtTabs, AtTabsPane} from "taro-ui";
+import { AtCard } from "taro-ui"
+import { AtRate } from 'taro-ui'
 import img from '../../assets/img/1.jpg'
 import img2 from '../../assets/img/2.jpg'
 import './index.scss'
