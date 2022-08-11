@@ -77,10 +77,18 @@ class My extends Component {
                 url: '/pages/order/index' //'/pages/physicalIdentity/healthKnowledge'
               });
               break;
-            case 3:
-              Taro.navigateTo({
-                url: '/pages/homePage/index'
-              });
+            case '获取code':
+                Taro.login({
+                    success: function (res) {
+                        console.log(res);
+                        if (res.code) {
+                            //发起网络请求
+
+                        } else {
+                            console.log('登录失败！' + res.errMsg)
+                        }
+                    }
+                })
               break;
             case '获取用户地址':
                 Taro.chooseAddress({

@@ -10,6 +10,7 @@ import Addcut from "../common/addcut/addcut";
 import {connect} from "react-redux";
 import {findfood} from "../../actions/food";
 import {findfoodclass} from "../../actions/foodclass"
+import {findcommend} from "../../actions/commend";
 @connect(({food}) => ({food}), findfood)
 @connect(({foodClass}) => ({foodClass}), findfoodclass)
 class Index extends Component {
@@ -75,13 +76,13 @@ class Index extends Component {
                         indicatorDots
                         autoplay>
                         <SwiperItem>
-                            <View ><Image src={img} className="loop_img"/></View>
+                            <View ><Image src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-5200ddd9e138c96e3d74b660ddff620a_1440w.jpg%3Fsource%3D172ae18b&refer=http%3A%2F%2Fpic1.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1662719634&t=4ed55f52e281a0719965ce0de5ae4b4f' className="loop_img"/></View>
                         </SwiperItem>
                         <SwiperItem>
-                            <View ><Image src={img2} className="loop_img"/></View>
+                            <View ><Image src='https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0119ca5b5e9465a801215c8fd2225b.jpg%403000w_1l_0o_100sh.jpg&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1662719731&t=57e709773798f958b4642cbd5a9ff571' className="loop_img"/></View>
                         </SwiperItem>
                         <SwiperItem>
-                            <View >图片3</View>
+                            <View ><Image src = 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg22.pxto.com.cn%2Fthumb%2F2104%2F06%2F606be20c912c8.jpg&refer=http%3A%2F%2Fimg22.pxto.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1662719809&t=bab469b87a67709fb98c23aa57db4c6a' className="loop_img"/></View>
                         </SwiperItem>
                     </Swiper>
                     <AtTabs

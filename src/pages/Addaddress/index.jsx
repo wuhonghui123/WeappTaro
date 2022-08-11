@@ -52,7 +52,7 @@ handleClick(value){
                 type='text'
                 placeholder='请输入收货人姓名'
                 value={this.state.value}
-                onChange={this.handleChange.bind()}
+                onChange={this.handleChange.bind(this)}
             />
             <AtInput
                 name='value'
@@ -60,7 +60,7 @@ handleClick(value){
                 type='text'
                 placeholder='请输入收货人手机号码'
                 value={this.state.value}
-                onChange={this.handleChange.bind()}
+                onChange={this.handleChange.bind(this)}
             />
             <AtInput
                 name='value'
@@ -68,7 +68,7 @@ handleClick(value){
                 type='text'
                 placeholder='请输入收货人收货地址'
                 value={this.state.value}
-                onChange={this.handleChange.bind()}
+                onChange={this.handleChange.bind(this)}
             />
             <AtButton className="Addaddress" formType='submit'>
               <Text className="text" onClick={this.handleClick}>保存</Text>

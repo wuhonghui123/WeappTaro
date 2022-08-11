@@ -4,20 +4,14 @@ import {AtTabs, AtTabsPane} from "taro-ui";
 import {getCurrentInstance} from "@tarojs/taro";
 import './index.scss'
 import Addcut from "../common/addcut/addcut";
-
+import {connect} from "react-redux";
+import {findcommend} from "../../actions/commend";
+@connect(({commend}) => ({commend}), findcommend)
 class foodinfo extends Component {
   constructor () {
     super(...arguments)
     this.state = {
         current: 0,
-        // foodinfo:[],
-        //     name:'',
-        //     id:'',
-        //     price:'',
-        //     food_img:'',
-        //     like_num:'',
-        //     class_name:'',
-        //     sale:'',
         food:JSON.parse(getCurrentInstance().router.params.food)
     }
   }
@@ -30,6 +24,7 @@ class foodinfo extends Component {
     })
   }
   render () {
+      let foodcommendList = this.props.commend.foodList
       console.log(this.state.food);
       return (
         <AtTabs
@@ -51,7 +46,17 @@ class foodinfo extends Component {
               </View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
-            <View>标签页二的内容</View>
+            <View>
+                {
+                    foodcommendList.map((commend,index) => {
+                        if(commend.food_name === this.state.food.name){
+                            return(
+                                <View>{JSON.stringify(commend)}</View>
+                            )
+                        }
+                    })
+                }
+            </View>
           </AtTabsPane>
         </AtTabs>
     )
