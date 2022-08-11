@@ -62,28 +62,35 @@ class ShopCart extends Component {
     //全选
     allCheck(){
         if(this.state.allCheck==="true"){
-            this.setState({
-                allCheck:"false"
+                this.state.allCheck="false"
+            Object.values(this.state.shopCartList).map((shopCart, index) =>{
+                 this.state.shopCartList[shopCart.id].check="false"
+                /*index=shopCart.id
+                this.setState({
+                    ...this.state.shopCartList,
+                    [index]:{
+                        check: "false"
+                   }
+                })*/
             })
-            this.state.shopCartList.filter((item)=>{
-                item.check="false"
-            })
-            console.log("真kk",this.state.allCheck,this.state.shopCartList);
+
         }else{
-            this.state.shopCartList.filter((item)=>{
-                item.check="true"
+                this.state.allCheck="true"
+            Object.values(this.state.shopCartList).map((shopCart, index) =>{
+                 this.state.shopCartList[shopCart.id].check="true"
+                index=shopCart.id
+                /*this.setState({
+                    ...this.state.shopCartList,
+                    [index]:{
+                        check: "true"
+                    }
+                })*/
             })
-           /* this.state.shopCartList.map((shopCart, index) => {
-                this.state.shopCartList[index].check= "true"})*/
-            this.setState({
-                allCheck:"true"
-            })
-            console.log("假tt",this.state.allCheck,this.state.shopCartList);
         }
-        this.setState({
-            ...this.state.shopCartList,
-            shopCartList:this.state.shopCartList,
-        })
+        this.setState({})
+        console.log(this.state.allCheck,this.state.shopCartList);
+        Taro.setStorageSync("shopCart",this.state.shopCartList);
+
     }
     //管理按钮
     management(){
@@ -108,7 +115,6 @@ class ShopCart extends Component {
             }
             })
         Taro.setStorageSync("shopCart",this.state.shopCartList);
-        console.log("lll",Taro.getStorageSync("shopCart"));
         this.setState({
         })
     }
@@ -129,7 +135,7 @@ class ShopCart extends Component {
 
         return (
             <View>
-                <Checkbox checked={this.state.allCheck} value='全选' onClick={this.allCheck.bind(this)} >全选</Checkbox>
+                <Checkbox checked='{this.state.allCheck}' value='全选' onClick={this.allCheck.bind(this)} >全选</Checkbox>
                 <button style={styleBut} onClick={this.management.bind(this)} >{this.state.management}</button>
                 <hr/>
                 <View>
