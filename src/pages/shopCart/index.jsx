@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Checkbox, Text, View} from '@tarojs/components'
+import {Checkbox, Image, Text, View} from '@tarojs/components'
 import TabBar from "../common/tabBar";
 import {connect} from "react-redux";
 import {deleteShopCart, findShopCart} from "../../actions/shopcart";
@@ -7,6 +7,8 @@ import ShopCartComponent from '../common/shopCartCom';
 import React from "react";
 import order_food from "../../reducers/order_food";
 import {AddOrderFood} from "../../actions/order_food";
+import Taro from "@tarojs/taro";
+import Addcut from "../common/addcut/addcut";
 
 
 @connect(({shopCart,order_food}) => ({shopCart,order_food}), {findShopCart,deleteShopCart,AddOrderFood})
@@ -20,6 +22,7 @@ class ShopCart extends Component {
             shopCartList:this.props.shopCart.shopCartList,
             allCheck:false,
             money:0,
+
         }
     }
 
@@ -108,6 +111,7 @@ class ShopCart extends Component {
     }
 
     render() {
+
         console.log("购物车",this.state.allCheck);
         const shopCartTr = this.state.shopCartList.map((shopCart, index) => {
             return(

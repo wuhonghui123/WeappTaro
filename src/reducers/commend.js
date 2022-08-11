@@ -1,15 +1,15 @@
 const INITIAL_STATE = {
-    foodList: []
+    commendList: []
 }
 
 export default function food(previousState = INITIAL_STATE, action) {
-    let {type,foodList}=action;
+    let {type,commendList}=action;
     switch (type) {
-        case 'searchFood':
-            console.log("reducer: ",foodList.data.data);
+        case 'searchCommend':
+            console.log("reducer: ",commendList.data.data);
             return {
                 ...previousState,
-                foodList: foodList.data.data
+                foodList: commendList.data.data
             };
         default:
             return previousState;
