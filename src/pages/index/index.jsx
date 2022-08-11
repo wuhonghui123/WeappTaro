@@ -13,6 +13,7 @@ import {findfoodclass} from "../../actions/foodclass"
 import {findcommend} from "../../actions/commend";
 @connect(({food}) => ({food}), findfood)
 @connect(({foodClass}) => ({foodClass}), findfoodclass)
+@connect(({commend}) => ({commend}), findcommend)
 class Index extends Component {
     handleClick2(food,e) {
         console.log('点击了', food);
@@ -64,6 +65,7 @@ class Index extends Component {
     render() {
         let Item = this.props.foodClass.foodClassList;
         let List = this.props.food.foodList;
+        console.log(this.props.commend.foodList);
         return (
 
             <View>
