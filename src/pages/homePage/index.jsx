@@ -13,7 +13,8 @@ class My extends Component {
           userInfo:[],
           name:'',
           hasUserInfo:false,
-          avatarUrl:'https://jdc.jd.com/img/200'
+          avatarUrl:'https://jdc.jd.com/img/200',
+            openid:""
 
         }
       }
@@ -85,10 +86,18 @@ class My extends Component {
             case '获取code':
                 Taro.login({
                     success: function (res) {
-                        console.log(res);
+                        console.log(res.code);
                         if (res.code) {
                             //发起网络请求
-
+                            Taro.request({
+                                url: 'http://localhost:8095/users/wxlogin',
+                                data: {
+                                    code: res.code
+                                },
+                                success: function (res) {
+                                    console.log(res);
+                                }
+                            })
                         } else {
                             console.log('登录失败！' + res.errMsg)
                         }
