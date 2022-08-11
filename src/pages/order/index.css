@@ -1,6 +1,8 @@
+.right{
+    float: right;
+    margin-right: 50px;
+}
 .order{
-    float: left;
-    position: absolute;
-    font-size: 20px;
-    background-color: red;
+    margin-left: 10%;
+
 }
