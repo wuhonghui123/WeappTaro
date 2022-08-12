@@ -12,16 +12,29 @@ export class Addaddress extends Component {
   constructor () {
     super(...arguments)
     this.state = {
-      value: ''
+      name: '',
+      phone:'',
+      address:'',
+        user_id:'1'
     }
   }
-  handleChange (value) {
+  handleChange (name) {
     this.setState({
-      value
+      name
+    })
+  }
+  handleChange1 (phone) {
+    this.setState({
+        phone
+    })
+  }
+  handleChange2 (address) {
+    this.setState({
+        address
     })
   }
   onSubmit (event) {
-    console.log(this.state.value)
+
   }
 
 
@@ -33,17 +46,20 @@ export class Addaddress extends Component {
 
   componentDidHide() {
   }
-handleClick(value){
-
+handleClick=()=>{
+    Taro.request({
+    url: 'http://localhost:8095/address/add',
+    data: this.state,
+        method:"POST",
+    success: function (res) {
+      console.log(res);
+    }
+  })
 }
 
   render() {
     return (
         <View>
-          AAAAA
-          <AtForm onSubmit={this.onSubmit.bind(this)}>
-            <AtInput name='value' title='aaa' type='gdfa' onChange={this.handleChange.bind()}></AtInput>
-          </AtForm>
           <AtForm
               onSubmit={this.onSubmit.bind(this)}>
             <AtInput
@@ -51,7 +67,7 @@ handleClick(value){
                 title='收货人'
                 type='text'
                 placeholder='请输入收货人姓名'
-                value={this.state.value}
+                value={this.state.name}
                 onChange={this.handleChange.bind(this)}
             />
             <AtInput
@@ -59,20 +75,22 @@ handleClick(value){
                 title='手机号码'
                 type='text'
                 placeholder='请输入收货人手机号码'
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
+                value={this.state.phone}
+                onChange={this.handleChange1.bind(this)}
             />
             <AtInput
                 name='value'
                 title='收货地址'
                 type='text'
                 placeholder='请输入收货人收货地址'
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
+                value={this.state.address}
+                onChange={this.handleChange2.bind(this)}
             />
-            <AtButton className="Addaddress" formType='submit'>
-              <Text className="text" onClick={this.handleClick}>保存</Text>
-            </AtButton>
+            {/*<AtButton className="Addaddress" formType='submit'>*/}
+            {/*  <Text className="text" onClick={this.handleClick}>保存</Text>*/}
+            {/*</AtButton>*/}
+              <view className="text" ><Text onClick={this.handleClick}>保存</Text></view>
+
           </AtForm>
         </View>
     )
