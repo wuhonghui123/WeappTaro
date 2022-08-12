@@ -32,9 +32,9 @@ class ShopCartComponent extends Component {
 
     changeCheck(){
         if(this.props.shopCartList.check==="true"){
-            this.state.shopCartList.check= "false"
+            this.state.shopCartList.check= false
         }else {
-            this.state.shopCartList.check= "true"
+            this.state.shopCartList.check= true
         }
         this.props.changeCheck(this.state.shopCartList.check)
     }
@@ -46,12 +46,12 @@ class ShopCartComponent extends Component {
                console.log("输出",this.state.value,this.state.shopCartList);
             return (
                     <View style={{float:'left',border: '1px dashed #ccc',width:'100%',height:'150px'} }>
-                                <Checkbox  style={{float:"left"}} checked='{this.state.shopCartList.check}' value={this.props.shopCartList.name} onClick={this.changeCheck.bind(this)}>
+                                <Checkbox  style={{float:"left"}} checked={this.state.shopCartList.check} value={this.props.shopCartList.name} onClick={this.changeCheck.bind(this)}>
                                 </Checkbox>
                         <Text style={{float:"left"}}>商品：{this.props.shopCartList.name}</Text>
                         <Text>单价：{this.props.shopCartList.price}</Text>
 
-                            {/*<AtButton  size='mini' circle='true'  style={{float:"right",width:"10px",height:'5px'}}>--</AtButton>*/}
+                            {/*<AtButton type='primary' size='small' circle='true'  style={{float:"right",width:"10px",height:'5px'}}>--</AtButton>*/}
 
                         <Image src={this.state.shopCartList.food_img} alt={"图片"} style={{position:'relative' ,width:"50%",height:'80%',}}>
                         </Image>

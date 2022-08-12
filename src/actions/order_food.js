@@ -7,7 +7,7 @@ export const AddOrderFood=(list)=>{
     console.log("Action", AllList);
     return (dispatch) => {
         Taro.request({
-            url: 'http://localhost:8091/orderFood/add', //仅为示例，并非真实的接口地址
+            url: 'https://g6.glypro19.com/weappapi/orderFood/add', //仅为示例，并非真实的接口地址
             data: AllList,
             dataType: 'json',
             method:"POSt",
