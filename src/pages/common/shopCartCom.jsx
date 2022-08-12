@@ -23,7 +23,8 @@ class ShopCartComponent extends Component {
     }
 
     handleChange (value) {
-        this.props.changeShopCartList(value,this.state.index);
+        this.props.changeShopCartList(value,this.state.shopCartList.id);
+        console.log("lll",value,this.state.shopCartList.id)
         this.setState({
             value
         })
@@ -41,16 +42,12 @@ class ShopCartComponent extends Component {
 
     render()
         {
-            // this.props.shopCartList.Num=this.state.value;
-            const food=this.state.shopCartList;
-               console.log("输出",this.state.value,this.state.shopCartList);
             return (
                     <View style={{float:'left',border: '1px dashed #ccc',width:'100%',height:'150px'} }>
                                 <Checkbox  style={{float:"left"}} checked={this.state.shopCartList.check} value={this.props.shopCartList.name} onClick={this.changeCheck.bind(this)}>
                                 </Checkbox>
                         <Text style={{float:"left"}}>商品：{this.props.shopCartList.name}</Text>
                         <Text>单价：{this.props.shopCartList.price}</Text>
-
                             {/*<AtButton type='primary' size='small' circle='true'  style={{float:"right",width:"10px",height:'5px'}}>--</AtButton>*/}
 
                         <Image src={this.state.shopCartList.food_img} alt={"图片"} style={{position:'relative' ,width:"50%",height:'80%',}}>

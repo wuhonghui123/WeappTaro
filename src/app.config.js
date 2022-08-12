@@ -49,7 +49,8 @@ export default defineAppConfig({
     {
       "root": "pages/shopCart/",
       "pages": [
-        "index"
+        "index",
+          'pay'
       ]
     }
   ]
