@@ -10,18 +10,20 @@ import Taro from "@tarojs/taro";
 class Order extends Component {
     constructor (props) {
         super(props)
+        let v=this.props.orderList.orderList;
+        console.log("test",this.props.orderList);
         this.state = {
             current:0,
-            orderList:[],
+            orderList:v,
             orderDetails:[]
         }
     }
     handleClick=(value)=>{
         this.setState({
             current:value,
-            orderList:this.props.orderList
+            orderList:this.state.orderList
         })
-        console.log(this.state.orderList);
+
     }
     cardClick=(id,user_id)=>{
         let re;
@@ -47,18 +49,45 @@ class Order extends Component {
         })
         console.log("&&&",this.state.orderDetails);
     }
+    typeClick=(id,user_id,order_type)=>{
+        console.log(id, user_id, order_type);
+        if (order_type=='待发货'){
+            Taro.request({
+                url: 'http://localhost:8091/order/update_type',
+                data: {
+                    order_id:id,
+                    user_id: user_id,
+                    order_type:"待评价"
+                },
+                header: {
+                    'content-type': 'application/json' // 默认值
+                },
+                success:(res)=>{
+                    console.log("action",res.data.data);
+                    this.setState({
+                        orderList:res.data.data
+                    })
+                }
+            })
+        }
+    }
 
   componentWillReceiveProps (nextProps) {
     console.log(this.props, nextProps)
   }
+  componentDidMount() {
+      this.setState({
+      });
+  }
 
-  componentWillUnmount () { }
+    componentWillUnmount () { }
 
   componentDidShow () { }
 
   componentDidHide () { }
-  render () {
-    return (
+  render() {
+      console.log(this.state.orderList);
+      return (
       <View>
           <AtTabs
               animated={false}
@@ -73,7 +102,7 @@ class Order extends Component {
               onClick={this.handleClick.bind(this)}>
               <AtTabsPane current={this.state.current} index={0}>
                   <View style='background-color: #FAFBFC;margin-bottom:30%'>
-                      {this.props.orderList.orderList.map((order,index)=>{
+                      {this.state.orderList.map((order,index)=>{
                           return(
                               <view style="margin-top:10px">
                                   <AtCard
@@ -90,8 +119,8 @@ class Order extends Component {
                                               </text>
                                           </view>
                                       </view>
-                                      <view style="width:70px;margin-left:80%">
-                                          <AtButton type='primary' size='small'>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
+                                      <view style="width:70px;margin-left:80%;" onClick={null}>
+                                          <AtButton type='primary' size='small' onClick={()=>this.typeClick(order.id,order.user_id,order.order_type)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                       </view>
                                   </AtCard>
                               </view>
