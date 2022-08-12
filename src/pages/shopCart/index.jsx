@@ -31,7 +31,7 @@ class ShopCart extends Component {
         console.log("结算外卖")
         let mon=0;
         const shopCartTr =Object.values(this.state.shopCartList).map((shopCart, index) => {
-            if(shopCart.check==="true") {
+            if(shopCart.check) {
                 mon+=shopCart.Num * shopCart.price;
             }
         })
@@ -61,10 +61,10 @@ class ShopCart extends Component {
     }
     //全选
     allCheck(){
-        if(this.state.allCheck==="true"){
-            this.state.allCheck="false"
+        if(this.state.allCheck){
+                this.state.allCheck=false
             Object.values(this.state.shopCartList).map((shopCart, index) =>{
-                this.state.shopCartList[shopCart.id].check="false"
+                 this.state.shopCartList[shopCart.id].check=false
                 /*index=shopCart.id
                 this.setState({
                     ...this.state.shopCartList,
@@ -75,9 +75,9 @@ class ShopCart extends Component {
             })
 
         }else{
-            this.state.allCheck="true"
+                this.state.allCheck=true
             Object.values(this.state.shopCartList).map((shopCart, index) =>{
-                this.state.shopCartList[shopCart.id].check="true"
+                 this.state.shopCartList[shopCart.id].check=true
                 index=shopCart.id
                 /*this.setState({
                     ...this.state.shopCartList,
@@ -109,11 +109,11 @@ class ShopCart extends Component {
     //删除按钮
     delShopCart=()=>{
         Object.values(this.state.shopCartList).map((shopCart, index) =>{
-            if(shopCart.check==="true") {
+            if(shopCart.check) {
                 let id=shopCart.id
                 delete this.state.shopCartList[id]
             }
-        })
+            })
         Taro.setStorageSync("shopCart",this.state.shopCartList);
         this.setState({
         })
@@ -121,7 +121,7 @@ class ShopCart extends Component {
 
     render() {
         const shopCartTr = Object.values(this.state.shopCartList).map((shopCart, index) =>{
-            return(
+        return(
                 <View>
                     <ShopCartComponent index={index} shopCartList={shopCart} changeShopCartList={this.changeShopCartList} changeCheck={this.changeCheck} />
                     <AddCut food={ShopCart}>
@@ -135,7 +135,7 @@ class ShopCart extends Component {
 
         return (
             <View>
-                <Checkbox checked='{this.state.allCheck}' value='全选' onClick={this.allCheck.bind(this)} >全选</Checkbox>
+                <Checkbox checked={this.state.allCheck} value='全选' onClick={this.allCheck.bind(this)} >全选</Checkbox>
                 <button style={styleBut} onClick={this.management.bind(this)} >{this.state.management}</button>
                 <hr/>
                 <View>
