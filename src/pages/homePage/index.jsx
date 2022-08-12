@@ -21,14 +21,18 @@ class My extends Component {
 
     componentWillUnmount() {
     }
-    componentWillMount(){
-        Taro.getStorageSync({
-            key: 'userinfo',
-            success: function (res) {
-                console.log("缓存取出来",res.data)
-                this.setState({
-                    userInfo:res.data
-                })
+    componentWillMount() {
+        Taro.getSetting({
+            success:  (res) =>{
+                if (res.authSetting['scope.userInfo']) {
+                    let userInfo = Taro.getStorageSync('userInfo')['0']
+                    console.log('缓存',userInfo);
+                    this.setState({
+                        name:userInfo.nickName,
+                        avatarUrl:userInfo.avatarUrl,
+                        hasUserInfo: true
+                    })
+                }
             }
         })
     }
@@ -49,9 +53,18 @@ class My extends Component {
                         avatarUrl:res.userInfo.avatarUrl,
                         hasUserInfo: true
                     })
-                    Taro.setStorage({
-                        key: "userinfo",
-                        data: res.userInfo
+                    Taro.setStorageSync('userinfo',res.userInfo);
+                    Taro.request({
+                        url: 'http://localhost:8095/users/register',
+                        data: {
+                            openid:Taro.getStorageSync('openid'),
+                            nickName:res.userInfo.nickName,
+                            avatarUrl:res.userInfo.avatarUrl
+                        },
+                        method:"POST",
+                        success: function (res) {
+                            console.log(res);
+                        }
                     })
                     // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
                 }
@@ -71,6 +84,11 @@ class My extends Component {
             case '我的评论':
                 Taro.navigateTo({
                     url: '/pages/mycomment/index'
+                });
+                break;
+            case '添加评论':
+                Taro.navigateTo({
+                    url: '/pages/Addcommend/index'
                 });
                 break;
             case 2:
@@ -121,6 +139,7 @@ class My extends Component {
     render() {
         let name = this.state.name;
         let avatarUrl = this.state.avatarUrl;
+        let hideClass=this.state.hasUserInfo===false?"":"hide";
 
         return (
             <View>
@@ -128,7 +147,7 @@ class My extends Component {
                 <AtAvatar className="at-avatar" circle
                           image={avatarUrl}></AtAvatar>{name}
                           </View>
-                <AtButton className="login" type='primary' size='small' onClick={this.login.bind(this)}>登录</AtButton>
+                <AtButton className={"login "+hideClass} type='primary' size='small' onClick={this.login.bind(this)}>登录</AtButton>
 
                 <AtGrid data={
                     [
@@ -142,7 +161,7 @@ class My extends Component {
                         },
                         {
                             image: 'https://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png',
-                            value: '领会员'
+                            value: '添加评论'
                         },
                         {
                             image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png',

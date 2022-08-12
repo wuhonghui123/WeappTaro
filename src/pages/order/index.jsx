@@ -51,7 +51,7 @@ class Order extends Component {
     }
     typeClick=(id,user_id,order_type)=>{
         console.log(id, user_id, order_type);
-        if (order_type=='待发货'){
+        if (order_type==='待发货'){
             Taro.request({
                 url: 'https://g6.glypro19.com/weappapi/order/update_type',
                 data: {

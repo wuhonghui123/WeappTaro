@@ -63,51 +63,51 @@ class Index extends Component {
     }
 
     componentDidMount() {
-        // this.setState({
-        //     userinfo:Taro.getStorageSync("userinfo")
-        // })
-        // console.log( this.state.userinfo)
-        // Taro.getStorage({
-        //     key: 'userinfo',
-        //     success: function (res) {
-        //         console.log("缓存取出来",res.data)
-        //         const userInfo = res.data;
-        //         this.setState((userInfo) => ({
-        //             userinfo: userInfo
-        //         }));
-        //     }
-        // })
-        // console.log(this.state.userinfo);
-        Taro.request({
-            url: `https://g6.glypro19.com/weappapi/food/classification_list`,
-            // url: 'http://127.0.0.1:8095/food/list',
-            header: {
-                'content-type': 'application/json' // 默认值
-            },
-            method: 'GET',
-            dataType: 'json',
-            credentials: 'include',
-            success: (res) => {
-                this.setState({
-                    tabList: res.data.data
-                })
-            },
-        });
-        Taro.request({
-            url: `https://g6.glypro19.com/weappapi/food/list`,
-            header: {
-                'content-type': 'application/json' // 默认值
-            },
-            method: 'GET',
-            dataType: 'json',
-            credentials: 'include',
-            success: (res) => {
-                // console.log(res.data.data);
-                this.setState({
-                    foodList: res.data.data
-                })
-            },
-        });
+        Taro.login({
+            success: function (res) {
+                console.log(res.code);
+                if (res.code) {
+                    //发起网络请求
+                    Taro.request({
+                        url: 'http://localhost:8095/users/wxlogin',
+                        data: {
+                            code: res.code
+                        },
+                        success: function (res) {
+                            console.log(res);
+                            Taro.setStorageSync('openid',res.data.openid);
+                            console.log('缓存取出来openid：',Taro.getStorageSync('openid'));
+                        }
+                    })
+                } else {
+                    console.log('登录失败！' + res.errMsg)
+                }
+            }
+        })
+        Taro.getSetting({
+            success: function (res) {
+                if (res.authSetting['scope.userInfo']){
+                    Taro.request({
+                        url: `http://localhost:8095/getUserInfo?openid=${Taro.getStorageSync('openid')}`,
+                        header: {
+                            'content-type': 'application/json' // 默认值
+                        },
+                        method: 'GET',
+                        dataType: 'json',
+                        credentials: 'include',
+                        success: (res) => {
+                            console.log('数据库拿到的用户信息：',res.data.data);
+                            Taro.setStorageSync('userInfo',res.data.data);
+                            console.log(Taro.getStorageSync('userInfo')['0'].nickName);
+
+                        },
+                    });
+                }
+            }
+        })
+
+
+
         Taro.request({
             url: `https://g6.glypro19.com/weappapi/commend/orderlist`,
             header: {
@@ -172,7 +172,7 @@ class Index extends Component {
                                     height='685px'
                                     tabDirection='vertical'
                                     swipeable={true}
-                                    tabList={this.state.tabList}
+                                    tabList={Item}
                                     onClick={this.handleClick.bind(this)}>
                                     {
                                         Item.map((item, index) => {

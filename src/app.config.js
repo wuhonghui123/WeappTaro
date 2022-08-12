@@ -52,6 +52,12 @@ export default defineAppConfig({
         "index",
           'pay'
       ]
+    },
+    {
+      "root": "pages/Addcommend/",
+      "pages": [
+        "index"
+      ]
     }
   ]
 })
