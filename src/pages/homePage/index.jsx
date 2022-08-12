@@ -139,6 +139,7 @@ class My extends Component {
     render() {
         let name = this.state.name;
         let avatarUrl = this.state.avatarUrl;
+        let hideClass=this.state.hasUserInfo===false?"":"hide";
 
         return (
             <View>
@@ -146,7 +147,7 @@ class My extends Component {
                 <AtAvatar className="at-avatar" circle
                           image={avatarUrl}></AtAvatar>{name}
                           </View>
-                <AtButton className="login" type='primary' size='small' onClick={this.login.bind(this)}>登录</AtButton>
+                <AtButton className={"login "+hideClass} type='primary' size='small' onClick={this.login.bind(this)}>登录</AtButton>
 
                 <AtGrid data={
                     [
