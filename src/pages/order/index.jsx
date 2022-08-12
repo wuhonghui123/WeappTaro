@@ -51,7 +51,7 @@ class Order extends Component {
     }
     typeClick=(id,user_id,order_type)=>{
         console.log(id, user_id, order_type);
-        if (order_type=='待发货'){
+        if (order_type==='待发货'){
             Taro.request({
                 url: 'http://localhost:8091/order/update_type',
                 data: {

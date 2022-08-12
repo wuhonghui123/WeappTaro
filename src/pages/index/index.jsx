@@ -84,6 +84,27 @@ class Index extends Component {
                 }
             }
         })
+        Taro.getSetting({
+            success: function (res) {
+                if (res.authSetting['scope.userInfo']){
+                    Taro.request({
+                        url: `http://localhost:8095/getUserInfo?openid=${Taro.getStorageSync('openid')}`,
+                        header: {
+                            'content-type': 'application/json' // 默认值
+                        },
+                        method: 'GET',
+                        dataType: 'json',
+                        credentials: 'include',
+                        success: (res) => {
+                            console.log('数据库拿到的用户信息：',res.data.data);
+                            Taro.setStorageSync('userInfo',res.data.data);
+                            console.log(Taro.getStorageSync('userInfo')['0'].nickName);
+
+                        },
+                    });
+                }
+            }
+        })
 
 
 
@@ -151,7 +172,7 @@ class Index extends Component {
                                     height='685px'
                                     tabDirection='vertical'
                                     swipeable={true}
-                                    tabList={this.state.tabList}
+                                    tabList={Item}
                                     onClick={this.handleClick.bind(this)}>
                                     {
                                         Item.map((item, index) => {

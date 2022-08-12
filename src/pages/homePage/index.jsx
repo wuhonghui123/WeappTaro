@@ -21,14 +21,18 @@ class My extends Component {
 
     componentWillUnmount() {
     }
-    componentWillMount(){
-        Taro.getStorageSync({
-            key: 'userinfo',
-            success: function (res) {
-                console.log("缓存取出来",res.data)
-                this.setState({
-                    userInfo:res.data
-                })
+    componentWillMount() {
+        Taro.getSetting({
+            success:  (res) =>{
+                if (res.authSetting['scope.userInfo']) {
+                    let userInfo = Taro.getStorageSync('userInfo')['0']
+                    console.log('缓存',userInfo);
+                    this.setState({
+                        name:userInfo.nickName,
+                        avatarUrl:userInfo.avatarUrl,
+                        hasUserInfo: true
+                    })
+                }
             }
         })
     }
@@ -49,9 +53,18 @@ class My extends Component {
                         avatarUrl:res.userInfo.avatarUrl,
                         hasUserInfo: true
                     })
-                    Taro.setStorage({
-                        key: "userinfo",
-                        data: res.userInfo
+                    Taro.setStorageSync('userinfo',res.userInfo);
+                    Taro.request({
+                        url: 'http://localhost:8095/users/register',
+                        data: {
+                            openid:Taro.getStorageSync('openid'),
+                            nickName:res.userInfo.nickName,
+                            avatarUrl:res.userInfo.avatarUrl
+                        },
+                        method:"POST",
+                        success: function (res) {
+                            console.log(res);
+                        }
                     })
                     // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
                 }
