@@ -5,11 +5,11 @@ import {connect} from "react-redux";
 import {deleteShopCart, findShopCart} from "../../actions/shopcart";
 import ShopCartComponent from '../common/shopCartCom';
 import React from "react";
-import order_food from "../../reducers/order_food";
 import {AddOrderFood} from "../../actions/order_food";
 import Taro from "@tarojs/taro";
 import {AtSwipeAction} from "taro-ui";
 import AddCut from "../common/addcut/addcut";
+
 
 
 @connect(({shopCart,order_food}) => ({shopCart,order_food}), {findShopCart,deleteShopCart,AddOrderFood})
@@ -29,6 +29,10 @@ class ShopCart extends Component {
     //结算外卖
     settlement(){
         console.log("结算外卖")
+        //跳转支付界面
+        Taro.navigateTo({
+            url:'/pages/shopCart/pay'
+        })
         let mon=0;
         const shopCartTr =Object.values(this.state.shopCartList).map((shopCart, index) => {
             if(shopCart.check) {
@@ -40,14 +44,12 @@ class ShopCart extends Component {
 
     }
     //获取子组件中的购买数量
-    changeShopCartList=(num)=>{
-        this.setState({
-            ...this.state.shopCartList,
-            index:{
-                ...this.state.shopCartList.index,
-                food_num:num
-            }
-        })
+    changeShopCartList=(num,id)=>{
+
+        this.state.shopCartList[id].Num=num;
+       this.setState({
+
+       })
     }
     //是否选中
     changeCheck=(key)=>{
@@ -89,8 +91,6 @@ class ShopCart extends Component {
         }
         this.setState({})
         console.log(this.state.allCheck,this.state.shopCartList);
-        Taro.setStorageSync("shopCart",this.state.shopCartList);
-
     }
     //管理按钮
     management(){
@@ -120,6 +120,7 @@ class ShopCart extends Component {
     }
 
     render() {
+        Taro.setStorageSync("shopCart",this.state.shopCartList);
         const shopCartTr = Object.values(this.state.shopCartList).map((shopCart, index) =>{
         return(
                 <View>

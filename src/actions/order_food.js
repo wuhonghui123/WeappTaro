@@ -1,10 +1,9 @@
 import Taro from "@tarojs/taro";
 
 export const AddOrderFood=(list)=>{
-    const AllList={food_id:list.food_id, food_num:list.food_num,
-        food_name:list.food_name, food_price:list.food_price,
+    const AllList={food_id:list.id, food_num:list.Num,
+        food_name:list.name, food_price:list.price,
         order_id:33}
-    console.log("Action", AllList);
     return (dispatch) => {
         Taro.request({
             url: 'https://g6.glypro19.com/weappapi/orderFood/add', //仅为示例，并非真实的接口地址

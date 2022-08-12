@@ -31,7 +31,7 @@ class Order extends Component {
             url:'/pages/order/test'
         })
         Taro.request({
-            url: 'http://localhost:8091/order/search', //仅为示例，并非真实的接口地址
+            url: 'https://g6.glypro19.com/weappapi/order/search', //仅为示例，并非真实的接口地址
             data: {
                 order_id:id,
                 user_id: user_id
@@ -53,7 +53,7 @@ class Order extends Component {
         console.log(id, user_id, order_type);
         if (order_type==='待发货'){
             Taro.request({
-                url: 'http://localhost:8091/order/update_type',
+                url: 'https://g6.glypro19.com/weappapi/order/update_type',
                 data: {
                     order_id:id,
                     user_id: user_id,
