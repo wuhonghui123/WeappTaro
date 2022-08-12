@@ -3,13 +3,19 @@ import {View, Text, SwiperItem, Swiper, Image} from '@tarojs/components'
 import TabBar from "../common/tabBar";
 import Taro from "@tarojs/taro";
 import {AtTabs, AtTabsPane} from "taro-ui";
+import { AtCard } from "taro-ui"
+import { AtRate } from 'taro-ui'
 import img from '../../assets/img/1.jpg'
 import img2 from '../../assets/img/2.jpg'
 import './index.scss'
 import Addcut from "../common/addcut/addcut";
 import {connect} from "react-redux";
 import {findfood} from "../../actions/food";
-@connect(({food}) => ({food}), {findfood})
+import {findfoodclass} from "../../actions/foodclass"
+import {findcommend} from "../../actions/commend";
+@connect(({food}) => ({food}), findfood)
+@connect(({foodClass}) => ({foodClass}), findfoodclass)
+@connect(({commend}) => ({commend}), findcommend)
 class Index extends Component {
     handleClick2(food,e) {
         console.log('点击了', food);
@@ -40,7 +46,9 @@ class Index extends Component {
             foodList:[],
             currentList: [],
             tabList: [],
-            userinfo:[]
+            userinfo:[],
+            commendList:[],
+            value: []
         }
     }
 
@@ -100,15 +108,32 @@ class Index extends Component {
                 })
             },
         });
+        Taro.request({
+            url: `https://g6.glypro19.com/weappapi/commend/orderlist`,
+            header: {
+                'content-type': 'application/json' // 默认值
+            },
+            method: 'GET',
+            dataType: 'json',
+            credentials: 'include',
+            success: (res) => {
+                // console.log(res.data.data);
+                this.setState({
+                    commendList: res.data.data
+                })
+            },
+        });
+
     }
 
     componentDidHide() {
     }
 
     render() {
-        // const List = this.props.food;
-        let Item = this.state.tabList;
-        let List = this.state.foodList;
+        let Item = this.props.foodClass.foodClassList;
+        let List = this.props.food.foodList;
+        console.log(this.props.commend.foodList);
+        let commend = this.state.commendList;
         return (
 
             <View>
@@ -187,7 +212,22 @@ class Index extends Component {
                             </View>
                         </AtTabsPane>
                         <AtTabsPane current={this.state.current1} index={1}>
-                            <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>所有评论</View>
+                            <View >
+                                    {
+                                        commend.map((commend,index)=>{
+                                            return (
+                                                <AtCard
+                                                    title='用户ID:'
+                                                    extra={commend.commend_id}
+                                                >
+                                                    <text>评论：{commend.comments}。  日期：{commend.comments_time.substring(0,10)}</text>
+                                                    <AtRate value={commend.stars}/>
+                                                </AtCard>
+                                            )
+                                        })
+
+                                    }
+                            </View>
                         </AtTabsPane>
                         <AtTabsPane current={this.state.current1} index={2}>
                             <View>

@@ -8,7 +8,7 @@ import {findOrderList} from "../../actions/orderList";
 
 
 @connect(({shopCart}) => ({shopCart}), {findShopCart})
-
+@connect(({orderList}) => ({orderList}),findOrderList)
 class TabBar extends Component {
   constructor(props) {
     super(props);

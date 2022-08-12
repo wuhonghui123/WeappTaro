@@ -13,7 +13,8 @@ class My extends Component {
           userInfo:[],
           name:'',
           hasUserInfo:false,
-          avatarUrl:'https://jdc.jd.com/img/200'
+          avatarUrl:'https://jdc.jd.com/img/200',
+            openid:""
 
         }
       }
@@ -77,11 +78,41 @@ class My extends Component {
                 url: '/pages/order/index' //'/pages/physicalIdentity/healthKnowledge'
               });
               break;
-            case 3:
-              Taro.navigateTo({
-                url: '/pages/homePage/index'
-              });
+            case '获取code':
+                Taro.login({
+                    success: function (res) {
+                        console.log(res.code);
+                        if (res.code) {
+                            //发起网络请求
+                            Taro.request({
+                                url: 'http://localhost:8095/users/wxlogin',
+                                data: {
+                                    code: res.code
+                                },
+                                success: function (res) {
+                                    console.log(res);
+                                }
+                            })
+                        } else {
+                            console.log('登录失败！' + res.errMsg)
+                        }
+                    }
+                })
               break;
+            case '获取用户地址':
+                Taro.chooseAddress({
+                    success: function (res) {
+                        console.log(res.userName)
+                        console.log(res.postalCode)
+                        console.log(res.provinceName)
+                        console.log(res.cityName)
+                        console.log(res.countyName)
+                        console.log(res.detailInfo)
+                        console.log(res.nationalCode)
+                        console.log(res.telNumber)
+                    }
+                })
+                break;
             default:
                 break;
         }
@@ -123,7 +154,7 @@ class My extends Component {
                         },
                         {
                             image: 'https://img30.360buyimg.com/jdphoto/s72x72_jfs/t5770/97/5184449507/2423/294d5f95/595c3b4dNbc6bc95d.png',
-                            value: '获取用户信息'
+                            value: '获取用户地址'
                         }
                     ]
                 }

@@ -4,78 +4,90 @@ import TabBar from "../common/tabBar";
 import {AtTabs, AtTabsPane,AtCard,AtButton} from "taro-ui";
 import {connect} from "react-redux";
 import {findOrderList} from "../../actions/orderList";
-import index from "@tarojs/react";
-import "./index.css"
 import Taro from "@tarojs/taro";
 
 @connect(({orderList}) => ({orderList}),findOrderList)
 class Order extends Component {
     constructor (props) {
         super(props)
+        let v=this.props.orderList.orderList;
+        console.log("test",this.props.orderList);
         this.state = {
             current:0,
-            order_list:[]
+            orderList:v,
+            orderDetails:[]
         }
     }
-    handleClick (value) {
+    handleClick=(value)=>{
         this.setState({
             current:value,
-            order_list:this.findOrder(value)
+            orderList:this.state.orderList
         })
+
     }
-    findOrder(a){
-        let t=['全部','待付款','待发货','已完成']
-        let re=[]
-        if (a==0){
+    cardClick=(id,user_id)=>{
+        let re;
+        Taro.navigateTo({
+            url:'/pages/order/test'
+        })
+        Taro.request({
+            url: 'http://localhost:8091/order/search', //仅为示例，并非真实的接口地址
+            data: {
+                order_id:id,
+                user_id: user_id
+            },
+            header: {
+                'content-type': 'application/json' // 默认值
+            },
+            success:(res)=>{
+                console.log("action",res.data.data);
+                re=res.data.data;
+                this.setState({
+                    orderDetails:re
+                })
+            }
+        })
+        console.log("&&&",this.state.orderDetails);
+    }
+    typeClick=(id,user_id,order_type)=>{
+        console.log(id, user_id, order_type);
+        if (order_type=='待发货'){
             Taro.request({
-                url: 'https://g6.glypro19.com/weappapi/order/list', //仅为示例，并非真实的接口地址
+                url: 'http://localhost:8091/order/update_type',
                 data: {
-                    user_id: '1'
+                    order_id:id,
+                    user_id: user_id,
+                    order_type:"待评价"
                 },
                 header: {
                     'content-type': 'application/json' // 默认值
                 },
-                success: function (res) {
-                    // 调reducer修改数据
-                    // console.log("action执行kk",res.data.data)
-                    //调用reducer修改数据
-                    re=res.data.data
-                }
-            })
-        }else {
-            Taro.request({
-                url: 'https://g6.glypro19.com/weappapi/order/list', //仅为示例，并非真实的接口地址
-                data: {
-                    user_id: '1',
-                    order_type:t[a]
-                },
-                header: {
-                    'content-type': 'application/json' // 默认值
-                },
-                success: function (res) {
-                    // 调reducer修改数据
-                    // console.log("action执行kk",res.data.data)
-                    //调用reducer修改数据
-                    re=res.data.data
-                    console.log("re:",re);
+                success:(res)=>{
+                    console.log("action",res.data.data);
+                    this.setState({
+                        orderList:res.data.data
+                    })
                 }
             })
         }
-        return re;
     }
 
   componentWillReceiveProps (nextProps) {
     console.log(this.props, nextProps)
   }
+  componentDidMount() {
+      this.setState({
+      });
+  }
 
-  componentWillUnmount () { }
+    componentWillUnmount () { }
 
   componentDidShow () { }
 
   componentDidHide () { }
-
-  render () {
-    return (
+  render() {
+      console.log(this.state.orderList);
+      return (
       <View>
           <AtTabs
               animated={false}
@@ -84,28 +96,31 @@ class Order extends Component {
                   { title: '全部订单' },
                   { title: '待付款' },
                   { title: '待收货' },
-                  { title: '历史订单' }
+                  { title: '历史订单' },
+                  { title: '待评价' }
               ]}
               onClick={this.handleClick.bind(this)}>
-              <AtTabsPane current={this.state.current} index={0} >
-                  <View style='background-color: #FAFBFC' >
-                      {this.props.orderList.orderList.map((order,index)=>{
+              <AtTabsPane current={this.state.current} index={0}>
+                  <View style='background-color: #FAFBFC;margin-bottom:30%'>
+                      {this.state.orderList.map((order,index)=>{
                           return(
                               <view style="margin-top:10px">
                                   <AtCard
+                                      onClick={()=>this.cardClick(order.id,order.user_id)}
                                       extra={order.order_type}
                                       title='翔麟烧烤'
-                                      //onClick={}
                                       thumb='../../assets/img/1.jpg'>
                                       <view style="display:flex;flex-direction:row;justify-content:flex-start;height:80px">
                                           <Image src={'../../assets/img/1.jpg'} style="width:100px;height:70px;margin-top:10px"/>
                                           <view style="width:200px;height:100px;font-size: 15px;margin:10px 0 0 10px;">
-                                              <text>下单时间：{order.create_time}</text>
-                                              <text>总价：￥{order.order_price}</text>
+                                              <text>
+                                                  下单时间：{order.create_time}{'\n'}
+                                                  总价：￥{order.order_price}
+                                              </text>
                                           </view>
                                       </view>
-                                      <view style="width:50px;margin-left:230px">
-                                          <AtButton type='primary' size='small'>{order.order_type=='待付款'? '去支付':'确认收货'}</AtButton>
+                                      <view style="width:70px;margin-left:80%;" onClick={null}>
+                                          <AtButton type='primary' size='small' onClick={()=>this.typeClick(order.id,order.user_id,order.order_type)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                       </view>
                                   </AtCard>
                               </view>
@@ -126,11 +141,13 @@ class Order extends Component {
                                           <view style="display:flex;flex-direction:row;justify-content:flex-start;height:80px">
                                               <Image src={'../../assets/img/1.jpg'} style="width:100px;height:70px;margin-top:10px"/>
                                               <view style="width:200px;height:100px;font-size: 15px;margin:10px 0 0 10px;">
-                                                  <text>下单时间：{order.create_time}</text>
-                                                  <text>总价：￥{order.order_price}</text>
+                                                  <text>
+                                                      下单时间：{order.create_time}{'\n'}
+                                                      总价：￥{order.order_price}
+                                                  </text>
                                               </view>
                                           </view>
-                                          <view style="width:50px;margin-left:230px">
+                                          <view style="width:70px;margin-left:80%">
                                               <AtButton type='primary' size='small'>去支付</AtButton>
                                           </view>
                                       </AtCard>
@@ -153,11 +170,13 @@ class Order extends Component {
                                           <view style="display:flex;flex-direction:row;justify-content:flex-start;height:80px">
                                               <Image src={'../../assets/img/1.jpg'} style="width:100px;height:70px;margin-top:10px"/>
                                               <view style="width:200px;height:100px;font-size: 15px;margin:10px 0 0 10px;">
-                                                  <text>下单时间：{order.create_time}</text>
-                                                  <text>总价：￥{order.order_price}</text>
+                                                  <text>
+                                                      下单时间：{order.create_time}{'\n'}
+                                                      总价：￥{order.order_price}
+                                                  </text>
                                               </view>
                                           </view>
-                                          <view style="width:50px;margin-left:230px">
+                                          <view style="width:70px;margin-left:80%">
                                               <AtButton type='primary' size='small'>确认收货</AtButton>
                                           </view>
                                       </AtCard>
@@ -180,11 +199,13 @@ class Order extends Component {
                                           <view style="display:flex;flex-direction:row;justify-content:flex-start;height:80px">
                                               <Image src={'../../assets/img/1.jpg'} style="width:100px;height:70px;margin-top:10px"/>
                                               <view style="width:200px;height:100px;font-size: 15px;margin:10px 0 0 10px;">
-                                                  <text>下单时间：{order.create_time}</text>
-                                                  <text>总价：￥{order.order_price}</text>
+                                                  <text>
+                                                      下单时间：{order.create_time}{'\n'}
+                                                      总价：￥{order.order_price}
+                                                  </text>
                                               </view>
                                           </view>
-                                          <view style="width:50px;margin-left:230px">
+                                          <view style="width:70px;margin-left:80%">
                                               <AtButton type='primary' size='small'>再来一单</AtButton>
                                           </view>
                                       </AtCard>
@@ -193,6 +214,35 @@ class Order extends Component {
                           }
                       })}
                   </View>
+              </AtTabsPane>
+                  <AtTabsPane current={this.state.current} index={4}>
+                      <View style='background-color: #FAFBFC' >
+                          {this.props.orderList.orderList.map((order,index)=>{
+                              if(order.order_type=='待评价'){
+                                  return(
+                                      <view style="margin-top:10px">
+                                          <AtCard
+                                              extra={order.order_type}
+                                              title={order.pay_type}
+                                              thumb='../../assets/img/1.jpg'>
+                                              <view style="display:flex;flex-direction:row;justify-content:flex-start;height:80px">
+                                                  <Image src={'../../assets/img/1.jpg'} style="width:100px;height:70px;margin-top:10px"/>
+                                                  <view style="width:200px;height:100px;font-size: 15px;margin:10px 0 0 10px;">
+                                                      <text>
+                                                          下单时间：{order.create_time}{'\n'}
+                                                          总价：￥{order.order_price}
+                                                      </text>
+                                                  </view>
+                                              </view>
+                                              <view style="width:70px;margin-left:80%">
+                                                  <AtButton type='primary' size='small'>评价</AtButton>
+                                              </view>
+                                          </AtCard>
+                                      </view>
+                                  )
+                              }
+                          })}
+                      </View>
               </AtTabsPane>
           </AtTabs>
         <TabBar tabBarCurrent={2} />
