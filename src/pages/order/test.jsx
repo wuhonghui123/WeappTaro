@@ -5,7 +5,7 @@ import "./index.css"
 
 class Test extends Component {
     render(){
-        console.log("testt:",this.state.orderDetails);
+        // console.log("testt:",this.state.orderDetails);
         return (
             <view>
                 <view style="width:92%;height:20%;border:1px solid #dee8f1;margin:2% 0 2% 4%;text-align: center">
