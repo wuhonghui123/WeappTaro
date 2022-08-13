@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import {Button, Text, View} from '@tarojs/components'
 import TabBar from "../common/tabBar";
-import {AtAvatar, AtCard, AtRate} from 'taro-ui'
+import {AtAvatar, AtCard, AtIcon, AtRate} from 'taro-ui'
 import { AtGrid } from "taro-ui"
 import Taro from "@tarojs/taro";
 import { AtButton } from 'taro-ui'
@@ -48,9 +48,9 @@ class myaddress extends Component {
   }
 
   //跳转修改地址页面
-  handClick1(value){
+  handClick1(n,p,a){
     Taro.navigateTo({
-      url:'/pages/Editaddress/index'
+      url:`/pages/Editaddress/index?name=${n}&phone=${p}&address=${a}`
     })
   }
 
@@ -65,9 +65,12 @@ class myaddress extends Component {
             return(
                 <AtCard
                     title={address.address}
+
                 >
                   <Text>{address.name}  {address.phone}</Text>
-                  <AtButton className="change" type="primary" size="small" onClick={this.handClick1.bind(this)}>修改地址</AtButton>
+                  {/*<AtButton className="change" type="primary" size="small" onClick={this.handClick1.bind(this)}>修改地址</AtButton>*/}
+
+                  <AtIcon className="icon" value='edit' size='20' color='#F00' onClick={()=>{this.handClick1(address.name,address.phone,address.address)}}></AtIcon>
                 </AtCard>
             )
           })

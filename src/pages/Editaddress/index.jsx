@@ -9,9 +9,10 @@ export class Editaddress extends Component {
   constructor () {
     super(...arguments)
     this.state = {
-      name: '',
-      phone:'',
-      address:''
+      name: Taro.getCurrentInstance().router.params.name,
+      phone:Taro.getCurrentInstance().router.params.phone,
+      address:Taro.getCurrentInstance().router.params.address,
+      id:'1'
     }
   }
   handleChange (name) {
@@ -42,7 +43,6 @@ export class Editaddress extends Component {
         console.log(res);
       }
     })
-    console.log("111");
   }
 
 
