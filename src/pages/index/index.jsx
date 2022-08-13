@@ -13,6 +13,7 @@ import {connect} from "react-redux";
 import {findfood} from "../../actions/food";
 import {findfoodclass} from "../../actions/foodclass"
 import {findcommend} from "../../actions/commend";
+import Bottom from "../common/bottom/bottom";
 @connect(({food}) => ({food}), findfood)
 @connect(({foodClass}) => ({foodClass}), findfoodclass)
 @connect(({commend}) => ({commend}), findcommend)
@@ -69,7 +70,7 @@ class Index extends Component {
                 if (res.code) {
                     //发起网络请求
                     Taro.request({
-                        url: 'http://localhost:8095/users/wxlogin',
+                        url: 'https://g6.glypro19.com/weappapi/users/wxlogin',
                         data: {
                             code: res.code
                         },
@@ -88,7 +89,7 @@ class Index extends Component {
             success: function (res) {
                 if (res.authSetting['scope.userInfo']){
                     Taro.request({
-                        url: `http://localhost:8095/getUserInfo?openid=${Taro.getStorageSync('openid')}`,
+                        url: `https://g6.glypro19.com/weappapi/getUserInfo?openid=${Taro.getStorageSync('openid')}`,
                         header: {
                             'content-type': 'application/json' // 默认值
                         },
@@ -137,7 +138,7 @@ class Index extends Component {
         return (
 
             <View>
-                <View>
+                <View className="index">
                     <Swiper
                         className='test-h'
                         indicatorColor='#999'
@@ -232,11 +233,14 @@ class Index extends Component {
                         <AtTabsPane current={this.state.current1} index={2}>
                             <View>
                                 商家
+
                             </View>
                         </AtTabsPane>
                     </AtTabs>
                 </View>
+
                 <View>
+
                     <TabBar tabBarCurrent={0}/>
                 </View>
             </View>
