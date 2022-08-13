@@ -221,7 +221,7 @@ class Index extends Component {
                                                     title='用户ID:'
                                                     extra={commend.commend_id}
                                                 >
-                                                    <text>评论：{commend.comments}。  日期：{commend.comments_time.substring(0,10)}</text>
+                                                    <text>评论：{commend.comments} 日期：{commend.comments_time.substring(0,10)}</text>
                                                     <AtRate value={commend.stars}/>
                                                 </AtCard>
                                             )

@@ -17,9 +17,9 @@ export const AddOrderFood=(list)=>{
                 // 调reducer修改数据
                 // console.log("action执行kk",res.data.data)
                 //调用reducer修改数据
-                dispatch({type: 'AddOrderFoodList', orderFoodList: list})
                 console.log(res);
             }
         })
     }
 }
+
