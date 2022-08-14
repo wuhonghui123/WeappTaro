@@ -77,9 +77,9 @@ class Pay extends Component {
 
                     <view style="display:flex;flex-direction:row;justify-content:flex-start;height:80px">
                         <Image src={shopCart.food_img} style="width:100px;height:70px;margin-top:10px"/>
-                        <view style="width:200px;height:100px;font-size: 15px;margin:25px 0 0 10px;">
-                            <text>{shopCart.food_name}</text>
-                            <text className='right'>￥{shopCart.price}</text>
+                        <view style="width:200px;height:100px;margin:25px 0 0 10px;">
+
+                            <text className='right'>￥{shopCart.price}</text><text>{shopCart.food_name}</text>
                             <text>{'\n'}x{shopCart.Num}</text>
                         </view>
                     </view>

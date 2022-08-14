@@ -31,7 +31,8 @@ export class Addcommend extends Component {
     submit=()=>{
         console.log(this.state);
         Taro.request({
-            url: 'https://g6.glypro19.com/weappapi/commend/add',
+            // url: 'https://g6.glypro19.com/weappapi/commend/add',
+            url: 'http://127.0.0.1:8095/commend/add',
             data: this.state,
             method:"POST",
             success: function (res) {
