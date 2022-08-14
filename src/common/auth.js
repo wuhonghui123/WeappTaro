@@ -42,6 +42,7 @@ export async function login(){
           'content-type': 'application/json'
         },
         success: (res)=> {
+          console.log(res.data.data);
           const sessionKeyAndOpenid = JSON.parse(`${res.data.data}`)
           Taro.setStorage({
             key:　'openid',

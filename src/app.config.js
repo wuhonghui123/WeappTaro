@@ -1,6 +1,17 @@
 export default defineAppConfig({
   pages: [
     'pages/index/index'
+    
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示" // 高速公路行驶持续后台定位
+    }
+  },
+  "requiredPrivateInfos":[
+      "getFuzzyLocation",
+      "choosePoi",
+      "chooseAddress"
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -48,6 +59,19 @@ export default defineAppConfig({
     },
     {
       "root": "pages/shopCart/",
+      "pages": [
+        "index",
+          'pay'
+      ]
+    },
+    {
+      "root": "pages/Addcommend/",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "pages/Editaddress/",
       "pages": [
         "index"
       ]

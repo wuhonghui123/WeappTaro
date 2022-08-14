@@ -36,7 +36,7 @@ class Order extends Component {
             url:'/pages/order/test'
         })
         Taro.request({
-            url: 'http://localhost:8091/order/search', //仅为示例，并非真实的接口地址
+            url: 'https://g6.glypro19.com/weappapi/order/search', //仅为示例，并非真实的接口地址
             data: {
                 order_id:id,
                 user_id: user_id
@@ -58,7 +58,7 @@ class Order extends Component {
         console.log(id, user_id, order_type);
         if (order_type=='待发货'){
             Taro.request({
-                url: 'http://localhost:8091/order/update_type',
+                url: 'https://g6.glypro19.com/weappapi/order/update_type',
                 data: {
                     order_id:id,
                     user_id: user_id,
@@ -124,8 +124,8 @@ class Order extends Component {
                                               </text>
                                           </view>
                                       </view>
-                                      <view style="width:70px;margin-left:80%;" onClick={null}>
-                                          <AtButton type='primary' size='small' onClick={()=>this.typeClick(order.id,order.user_id,order.order_type)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
+                                      <view style="width:70px;margin-left:80%;">
+                                          <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                       </view>
                                   </AtCard>
                               </view>
@@ -140,6 +140,7 @@ class Order extends Component {
                               return(
                                   <view style="margin-top:10px">
                                       <AtCard
+                                          onClick={()=>this.cardClick(order.id,order.user_id)}
                                           extra={order.order_type}
                                           title='翔麟烧烤'
                                           thumb='../../assets/img/1.jpg'>
@@ -152,8 +153,8 @@ class Order extends Component {
                                                   </text>
                                               </view>
                                           </view>
-                                          <view style="width:70px;margin-left:80%">
-                                              <AtButton type='primary' size='small'>去支付</AtButton>
+                                          <view style="width:70px;margin-left:80%;">
+                                              <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                           </view>
                                       </AtCard>
                                   </view>
@@ -169,6 +170,7 @@ class Order extends Component {
                               return(
                                   <view style="margin-top:10px">
                                       <AtCard
+                                          onClick={()=>this.cardClick(order.id,order.user_id)}
                                           extra={order.order_type}
                                           title='翔麟烧烤'
                                           thumb='../../assets/img/1.jpg'>
@@ -181,8 +183,8 @@ class Order extends Component {
                                                   </text>
                                               </view>
                                           </view>
-                                          <view style="width:70px;margin-left:80%">
-                                              <AtButton type='primary' size='small'>确认收货</AtButton>
+                                          <view style="width:70px;margin-left:80%;">
+                                              <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                           </view>
                                       </AtCard>
                                   </view>
@@ -198,8 +200,9 @@ class Order extends Component {
                               return(
                                   <view style="margin-top:10px">
                                       <AtCard
+                                          onClick={()=>this.cardClick(order.id,order.user_id)}
                                           extra={order.order_type}
-                                          title={order.pay_type}
+                                          title='翔麟烧烤'
                                           thumb='../../assets/img/1.jpg'>
                                           <view style="display:flex;flex-direction:row;justify-content:flex-start;height:80px">
                                               <Image src={'../../assets/img/1.jpg'} style="width:100px;height:70px;margin-top:10px"/>
@@ -210,8 +213,8 @@ class Order extends Component {
                                                   </text>
                                               </view>
                                           </view>
-                                          <view style="width:70px;margin-left:80%">
-                                              <AtButton type='primary' size='small'>再来一单</AtButton>
+                                          <view style="width:70px;margin-left:80%;">
+                                              <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                           </view>
                                       </AtCard>
                                   </view>
@@ -227,8 +230,9 @@ class Order extends Component {
                                   return(
                                       <view style="margin-top:10px">
                                           <AtCard
+                                              onClick={()=>this.cardClick(order.id,order.user_id)}
                                               extra={order.order_type}
-                                              title={order.pay_type}
+                                              title='翔麟烧烤'
                                               thumb='../../assets/img/1.jpg'>
                                               <view style="display:flex;flex-direction:row;justify-content:flex-start;height:80px">
                                                   <Image src={'../../assets/img/1.jpg'} style="width:100px;height:70px;margin-top:10px"/>
@@ -239,8 +243,11 @@ class Order extends Component {
                                                       </text>
                                                   </view>
                                               </view>
+                                              <view style="width:70px;margin-left:80%;">
+                                                  <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                               <view style="width:70px;margin-left:80%">
                                                   <AtButton type='primary' size='small' onClick={this.toMouseTracker}>评价</AtButton>
+                                              </view>
                                               </view>
                                           </AtCard>
                                       </view>
