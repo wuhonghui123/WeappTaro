@@ -25,6 +25,11 @@ class Order extends Component {
         })
 
     }
+    toMouseTracker(){
+        Taro.navigateTo({
+            url:'/pages/Addcommend/index'
+        })
+    }
     cardClick=(id,user_id)=>{
         let re;
         Taro.navigateTo({
@@ -240,6 +245,9 @@ class Order extends Component {
                                               </view>
                                               <view style="width:70px;margin-left:80%;">
                                                   <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
+                                              <view style="width:70px;margin-left:80%">
+                                                  <AtButton type='primary' size='small' onClick={this.toMouseTracker}>评价</AtButton>
+                                              </view>
                                               </view>
                                           </AtCard>
                                       </view>

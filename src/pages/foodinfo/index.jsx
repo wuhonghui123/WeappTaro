@@ -14,11 +14,12 @@ class foodinfo extends Component {
     this.state = {
         current: 0,
         food:JSON.parse(getCurrentInstance().router.params.food),
-        foodcommendList:this.props.commend.foodList
+        foodcommendList:this.props.commend.foodList,
+
+        value: []
     }
   }
     componentDidMount() {
-        console.log(Taro.getStorageSync('WUHONGHUI'));
     }
     handleClick1=(value)=>{
         console.log(value);
@@ -33,7 +34,7 @@ class foodinfo extends Component {
     })
   }
   render () {
-      let foodcommendList = this.state.foodcommendList
+      let foodcommendList = this.props.commend.foodList
       console.log(this.state.food);
       return (
         <AtTabs
@@ -50,8 +51,8 @@ class foodinfo extends Component {
             <View>{this.state.name}{this.state.food.name}</View>
 
               <Addcut className="addcut" food={this.state.food}></Addcut>
-              {/* <Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text> */}
-                  <View onClick={this.handleClick1.bind(this)} style='position:fixed;width:100%;bottom:400px'><Bottom></Bottom></View>
+              <Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
+                  <Bottom onClick={this.handleClick1.bind(this)}></Bottom>
               </View>
 
           </AtTabsPane>
@@ -61,7 +62,13 @@ class foodinfo extends Component {
                     foodcommendList.map((commend,index) => {
                         if(commend.food_name === this.state.food.name){
                             return(
-                                <View>{JSON.stringify(commend)}</View>
+                            <AtCard
+                                title='用户ID:'
+                                extra={commend.commend_id}
+                            >
+                                <text>评论：{commend.comments}。  日期：{commend.comments_time.substring(0,10)}</text>
+                                <AtRate value={commend.stars}/>
+                            </AtCard>
                             )
                         }
                     })
