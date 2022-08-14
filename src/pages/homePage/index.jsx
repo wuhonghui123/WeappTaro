@@ -124,15 +124,15 @@ class My extends Component {
                 break;
             case '获取用户地址':
 
-    //             wx.chooseLocation({
-    //   success: res => {
-    //     console.info(res);
-    //   }
-    // })
+                wx.chooseLocation({
+      success: res => {
+        console.info(res);
+      }
+    })
 
-                Taro.chooseAddress({
-                    success: function (res) {
-                        console.log(res)
+                // Taro.chooseAddress({
+                //     success: function (res) {
+                //         console.log(res)
                         // console.log(res.postalCode)
                         // console.log(res.provinceName)
                         // console.log(res.cityName)
@@ -140,8 +140,8 @@ class My extends Component {
                         // console.log(res.detailInfo)
                         // console.log(res.nationalCode)
                         // console.log(res.telNumber)
-                    }
-                })
+                //     }
+                // })
                 break;
             default:
                 break;

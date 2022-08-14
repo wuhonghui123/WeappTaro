@@ -96,7 +96,7 @@ class Index extends Component {
             success: function (res) {
                 if (res.authSetting['scope.userInfo']){
                     Taro.request({
-                        url: `http://localhost:8095/getUserInfo?openid=${Taro.getStorageSync('openid')}`,
+                        url: `https://g6.glypro19.com/weappapi/getUserInfo?openid=${Taro.getStorageSync('openid')}`,
                         header: {
                             'content-type': 'application/json' // 默认值
                         },
@@ -158,7 +158,7 @@ class Index extends Component {
                             <View ><Image src={img2} className="loop_img"/></View>
                         </SwiperItem>
                         <SwiperItem>
-                            <View >图片3</View>
+                            <View ><Image src={'https://s3.bmp.ovh/imgs/2022/08/09/05f213e54baa29a7.jpg'} className="loop_img"/></View>
                         </SwiperItem>
                     </Swiper>
                     <AtTabs
@@ -198,9 +198,10 @@ class Index extends Component {
                                                                                 <View className="foodlist_item_info">
                                                                                     <Text
                                                                                         onClick={this.handleClick2.bind(this,JSON.stringify(food))}>{food.name}</Text>
-                                                                                    <Text>月售：{food.sole}</Text>
+                                                                                    <Text>月售：{food.sale}</Text>
                                                                                     <Text
-                                                                                        className="price">¥{food.price}</Text>
+                                                                                        className="price">¥{food.price}
+                                                                                        {'\n'}</Text>
                                                                                     <Addcut food={food}></Addcut>
                                                                                 </View>
                                                                             </View>

@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import {View, Text, Image} from '@tarojs/components'
-import {AtTabs, AtTabsPane} from "taro-ui";
+import {AtCard, AtRate, AtTabs, AtTabsPane} from "taro-ui";
 import Taro, {getCurrentInstance} from "@tarojs/taro";
 import './index.scss'
 import Addcut from "../common/addcut/addcut";
@@ -14,7 +14,7 @@ class foodinfo extends Component {
     this.state = {
         current: 0,
         food:JSON.parse(getCurrentInstance().router.params.food),
-        foodcommendList:this.props.commend.foodList,
+        // foodcommendList:this.props.commend.foodList,
 
         value: []
     }
@@ -49,10 +49,11 @@ class foodinfo extends Component {
               <View className="foodinfo">
               <Image className="food_img" src={this.state.food.food_img}/>
             <View>{this.state.name}{this.state.food.name}</View>
+            <Text className="price">¥{this.state.food.price}{'\n'}</Text>
 
               <Addcut className="addcut" food={this.state.food}></Addcut>
               <Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
-                  <Bottom onClick={this.handleClick1.bind(this)}></Bottom>
+              <View onClick={this.handleClick1.bind(this)} style='position:fixed;width:100%;bottom:400px'><Bottom></Bottom></View>
               </View>
 
           </AtTabsPane>

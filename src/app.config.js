@@ -1,7 +1,7 @@
 export default defineAppConfig({
   pages: [
     'pages/index/index'
-    
+
   ],
   "permission": {
     "scope.userLocation": {
@@ -72,12 +72,6 @@ export default defineAppConfig({
     },
     {
       "root": "pages/Editaddress/",
-      "pages": [
-        "index"
-      ]
-    },
-    {
-      "root": "pages/Addcommend/",
       "pages": [
         "index"
       ]

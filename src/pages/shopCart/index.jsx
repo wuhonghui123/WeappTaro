@@ -125,9 +125,7 @@ class ShopCart extends Component {
         return(
                 <View>
                     <ShopCartComponent index={index} shopCartList={shopCart} changeShopCartList={this.changeShopCartList} changeCheck={this.changeCheck} />
-                    <AddCut food={ShopCart}>
-
-                    </AddCut>
+                   
                 </View>
             )
         })
