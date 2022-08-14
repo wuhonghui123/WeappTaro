@@ -79,6 +79,40 @@ class Test extends Component {
             }
         })
     }
+    typeClick=(id,user_id,order_type)=>{
+        console.log(id, user_id, order_type);
+        if (order_type=='待发货'||order_type=='待收货'){
+            Taro.request({
+                url: 'https://g6.glypro19.com/weappapi/order/update_type',
+                data: {
+                    order_id:id,
+                    user_id: user_id,
+                    order_type:"待评价"
+                },
+                header: {
+                    'content-type': 'application/json' // 默认值
+                },
+                success:(res)=>{
+                    console.log("action",res.data.data);
+                    this.setState({
+                        orderList:res.data.data
+                    })
+                }
+            })
+        }else if(order_type=='待评价'){
+            Taro.navigateTo({
+                url:'/pages/Addcommend/index'
+            })
+        }else if(order_type=='待付款'){
+            Taro.navigateTo({
+                url:'/pages/shopCart/pay'
+            })
+        }else if(order_type=='已完成'){
+            Taro.reLaunch({
+                url: '/pages/index/index'
+            });
+        }
+    }
 
 
     render(){
@@ -97,7 +131,7 @@ class Test extends Component {
                                     <text style='font-size: 20px;'>订单已完成{'\n'}</text>
                                     <text style='font-size: 12px'>感谢您对翔麟烧烤外卖的信任，期待再次光临{'\n'}</text>
                                 </text>
-                                <Button style='width:30%;height:30px;background-color:yellow;margin-top:10px;font-size:12px;margin-bottom:15px'>再来一单</Button>
+                                <Button onClick={()=>this.typeClick(details.id,details.user_id,details.order_type)} style='width:30%;height:30px;background-color:yellow;margin-top:10px;font-size:12px;margin-bottom:15px'>再来一单</Button>
                             </view> : details.order_type=='待评价'?
                             <view style="width:92%;height:20%;border:1px solid #dee8f1;margin:2% 0 2% 4%;text-align: center">
                                 <text>
@@ -105,7 +139,7 @@ class Test extends Component {
                                     <text style='font-size: 20px;'>订单待评价{'\n'}</text>
                                     <text style='font-size: 12px'>感谢您对翔麟烧烤外卖的信任，期待再次光临{'\n'}</text>
                                 </text>
-                                <Button style='width:30%;height:30px;background-color:yellow;margin-top:10px;font-size:12px;margin-bottom:15px'>去评价</Button>
+                                <Button onClick={()=>this.typeClick(details.id,details.user_id,details.order_type)} style='width:30%;height:30px;background-color:yellow;margin-top:10px;font-size:12px;margin-bottom:15px'>去评价</Button>
                             </view>:details.order_type=='待付款'?
                             <view style="width:92%;height:20%;border:1px solid #dee8f1;margin:2% 0 2% 4%;text-align: center">
                                 <text>
@@ -113,7 +147,7 @@ class Test extends Component {
                                     <text style='font-size: 20px;'>订单未付款{'\n'}</text>
                                     <text style='font-size: 12px'>感谢您对翔麟烧烤外卖的信任，期待再次光临{'\n'}</text>
                                 </text>
-                                <Button style='width:30%;height:30px;background-color:yellow;margin-top:10px;font-size:12px;margin-bottom:15px'>去付款</Button>
+                                <Button onClick={()=>this.typeClick(details.id,details.user_id,details.order_type)} style='width:30%;height:30px;background-color:yellow;margin-top:10px;font-size:12px;margin-bottom:15px'>去付款</Button>
                             </view>:
                             <view style="width:92%;height:20%;border:1px solid #dee8f1;margin:2% 0 2% 4%;text-align: center">
                                 <text>
@@ -121,7 +155,7 @@ class Test extends Component {
                                     <text style='font-size: 20px;'>订单未确认收货{'\n'}</text>
                                     <text style='font-size: 12px'>感谢您对翔麟烧烤外卖的信任，期待再次光临{'\n'}</text>
                                 </text>
-                                <Button style='width:30%;height:30px;background-color:yellow;margin-top:10px;font-size:12px;margin-bottom:15px'>确认收货</Button>
+                                <Button onClick={()=>this.typeClick(details.id,details.user_id,details.order_type)} style='width:30%;height:30px;background-color:yellow;margin-top:10px;font-size:12px;margin-bottom:15px'>确认收货</Button>
                             </view>}
                             <view>
                                 <AtCard
