@@ -63,13 +63,13 @@ class foodinfo extends Component {
                     foodcommendList.map((commend,index) => {
                         if(commend.food_name === this.state.food.name){
                             return(
-                            <AtCard
-                                title='用户ID:'
-                                extra={commend.commend_id}
-                            >
-                                <text>评论：{commend.comments}。  日期：{commend.comments_time.substring(0,10)}</text>
-                                <AtRate value={commend.stars}/>
-                            </AtCard>
+                                <AtCard
+                                    title={commend.nickName}
+                                    extra={commend.comments_time}
+                                    thumb={commend.avatarUrl}>
+                                    <text>评论：{commend.comments}</text>
+                                    <AtRate value={commend.stars}/>
+                                </AtCard>
                             )
                         }
                     })

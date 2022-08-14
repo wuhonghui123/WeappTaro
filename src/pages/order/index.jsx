@@ -78,7 +78,7 @@ class Order extends Component {
             })
         }else if(order_type=='待评价'){
             Taro.navigateTo({
-                url:'/pages/Addcommend/index'
+                url:`/pages/Addcommend/index?id=${id}&user_id=${user_id}`
             })
         }else if(order_type=='待付款'){
             Taro.navigateTo({

@@ -48,7 +48,7 @@ export class Addaddress extends Component {
   }
 handleClick=()=>{
     Taro.request({
-    url: 'http://localhost:8095/address/add',
+    url: 'https://g6.glypro19.com/weappapi/address/add',
     data: this.state,
         method:"POST",
     success: function (res) {

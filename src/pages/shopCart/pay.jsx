@@ -1,5 +1,5 @@
 import {Component} from "react";
-import {AtCard, AtModal, AtModalAction, AtModalContent, AtModalHeader} from "taro-ui";
+import {AtCard, AtModal, AtModalAction, AtModalContent, AtModalHeader, AtToast} from "taro-ui";
 import {Image, Button, Text} from "@tarojs/components";
 import Taro, {getStorageSync} from "@tarojs/taro";
 import {connect} from "react-redux";
@@ -35,7 +35,7 @@ class Pay extends Component {
             url: 'http://127.0.0.1:8095/order/addorder', //仅为示例，并非真实的接口地址
             method:'POST',
             data: {
-                user_id:"1",
+                user_id:"2",
                 order_price:this.state.allPrice
             },
             header: {
@@ -47,6 +47,7 @@ class Pay extends Component {
                 let orderid = res.data.msg;
                 this.pay(orderid)
                 Taro.setStorageSync('shopCart','')
+
             }
         })
 
@@ -90,7 +91,7 @@ class Pay extends Component {
                 <AtModal isOpened={this.state.isOpened}>
                     <AtModalHeader>支付</AtModalHeader>
                     <AtModalContent>
-                       <Text>余额: ¥{Taro.getStorageSync('money')}{'\n'}是否支付</Text>
+                       <Text style='text-align: center;'>余额: ¥{Taro.getStorageSync('money')}{'\n'}是否支付</Text>
                     </AtModalContent>
                     <AtModalAction> <Button onClick={this.Cancel}>取消</Button> <Button onClick={this.pay1}>确定</Button> </AtModalAction>
                 </AtModal>

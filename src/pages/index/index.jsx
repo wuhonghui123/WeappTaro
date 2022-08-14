@@ -227,13 +227,11 @@ class Index extends Component {
                                                     title={commend.nickName}
                                                     extra={commend.comments_time}
                                                     thumb={commend.avatarUrl}>
-                                                >
                                                     <text>评论：{commend.comments}</text>
                                                     <AtRate value={commend.stars}/>
                                                 </AtCard>
                                             )
                                         })
-
                                     }
                             </View>
                         </AtTabsPane>
