@@ -25,6 +25,11 @@ class Order extends Component {
         })
 
     }
+    toMouseTracker(){
+        Taro.navigateTo({
+            url:'/pages/Addcommend/index'
+        })
+    }
     cardClick=(id,user_id)=>{
         let re;
         Taro.navigateTo({
@@ -235,7 +240,7 @@ class Order extends Component {
                                                   </view>
                                               </view>
                                               <view style="width:70px;margin-left:80%">
-                                                  <AtButton type='primary' size='small'>评价</AtButton>
+                                                  <AtButton type='primary' size='small' onClick={this.toMouseTracker}>评价</AtButton>
                                               </view>
                                           </AtCard>
                                       </view>

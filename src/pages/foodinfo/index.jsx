@@ -1,6 +1,8 @@
 import { Component } from 'react'
 import {View, Text, Image} from '@tarojs/components'
 import {AtTabs, AtTabsPane} from "taro-ui";
+import { AtCard } from "taro-ui"
+import { AtRate } from 'taro-ui'
 import {getCurrentInstance} from "@tarojs/taro";
 import './index.scss'
 import Addcut from "../common/addcut/addcut";
@@ -12,7 +14,8 @@ class foodinfo extends Component {
     super(...arguments)
     this.state = {
         current: 0,
-        food:JSON.parse(getCurrentInstance().router.params.food)
+        food:JSON.parse(getCurrentInstance().router.params.food),
+        value: []
     }
   }
     componentDidMount() {
@@ -51,7 +54,13 @@ class foodinfo extends Component {
                     foodcommendList.map((commend,index) => {
                         if(commend.food_name === this.state.food.name){
                             return(
-                                <View>{JSON.stringify(commend)}</View>
+                            <AtCard
+                                title='用户ID:'
+                                extra={commend.commend_id}
+                            >
+                                <text>评论：{commend.comments}。  日期：{commend.comments_time.substring(0,10)}</text>
+                                <AtRate value={commend.stars}/>
+                            </AtCard>
                             )
                         }
                     })
