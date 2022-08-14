@@ -24,7 +24,7 @@ class Test extends Component {
     getOrderUser=(id,user_id)=>{
         let re;
         Taro.request({
-            url: 'http://localhost:8091/order/search', //仅为示例，并非真实的接口地址
+            url: 'https://g6.glypro19.com/weappapi/order/search', //仅为示例，并非真实的接口地址
             data: {
                 order_id:id,
                 user_id: user_id
@@ -44,7 +44,7 @@ class Test extends Component {
     getOrderFood=(id)=>{
         let re;
         Taro.request({
-            url: 'http://localhost:8091/orderFood/getOrderFood', //仅为示例，并非真实的接口地址
+            url: 'https://g6.glypro19.com/weappapi/orderFood/getOrderFood', //仅为示例，并非真实的接口地址
             data: {
                 order_id:id
             },
@@ -63,7 +63,7 @@ class Test extends Component {
     getorderDetails=(id)=>{
         let re;
         Taro.request({
-            url: 'http://localhost:8091/order/list', //仅为示例，并非真实的接口地址
+            url: 'https://g6.glypro19.com/weappapi/order/list', //仅为示例，并非真实的接口地址
             data: {
                 id:id
             },
@@ -134,7 +134,7 @@ class Test extends Component {
                                                 sum,
                                                     <view>
                                                         <view style="display:flex;flex-direction:row;justify-content:flex-start;height:80px">
-                                                            <Image src={'../../assets/img/1.jpg'} style="width:100px;height:70px;margin-top:10px"/>
+                                                            <Image src={food.food_img} style="width:100px;height:70px;margin-top:10px"/>
                                                             <view style="width:200px;height:100px;font-size: 15px;margin:25px 0 0 10px;">
                                                                 <text>{food.food_name}</text>
                                                                 <text className='right'>￥{food.food_price}</text>

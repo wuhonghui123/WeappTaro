@@ -28,7 +28,7 @@ class Order extends Component {
     cardClick=(id,user_id)=>{
         let re;
         Taro.navigateTo({
-            url:'/pages/order/test'
+            url:'/pages/order/test?id='+id+"&user_id="+user_id
         })
         Taro.request({
             url: 'https://g6.glypro19.com/weappapi/order/search', //仅为示例，并非真实的接口地址
@@ -51,7 +51,7 @@ class Order extends Component {
     }
     typeClick=(id,user_id,order_type)=>{
         console.log(id, user_id, order_type);
-        if (order_type=='待发货'){
+        if (order_type==='待发货'){
             Taro.request({
                 url: 'https://g6.glypro19.com/weappapi/order/update_type',
                 data: {
@@ -161,7 +161,7 @@ class Order extends Component {
               <AtTabsPane current={this.state.current} index={2} >
                   <View style='background-color: #FAFBFC' >
                       {this.props.orderList.orderList.map((order,index)=>{
-                          if(order.order_type=='待发货'){
+                          if(order.order_type==='待发货'){
                               return(
                                   <view style="margin-top:10px">
                                       <AtCard

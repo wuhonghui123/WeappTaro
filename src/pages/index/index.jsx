@@ -31,6 +31,12 @@ class Index extends Component {
 
         })
     }
+    handleClick3=(value)=>{
+        console.log(value);
+        Taro.reLaunch({
+            url: '/pages/shopCart/index'
+        });
+    }
 
     handleClick1(value) {
         this.setState({
@@ -49,7 +55,8 @@ class Index extends Component {
             tabList: [],
             userinfo:[],
             commendList:[],
-            value: []
+            value: [],
+            loginState:0
         }
     }
 
@@ -89,7 +96,7 @@ class Index extends Component {
             success: function (res) {
                 if (res.authSetting['scope.userInfo']){
                     Taro.request({
-                        url: `https://g6.glypro19.com/weappapi/getUserInfo?openid=${Taro.getStorageSync('openid')}`,
+                        url: `http://localhost:8095/getUserInfo?openid=${Taro.getStorageSync('openid')}`,
                         header: {
                             'content-type': 'application/json' // 默认值
                         },
@@ -99,7 +106,7 @@ class Index extends Component {
                         success: (res) => {
                             console.log('数据库拿到的用户信息：',res.data.data);
                             Taro.setStorageSync('userInfo',res.data.data);
-                            console.log(Taro.getStorageSync('userInfo')['0'].nickName);
+                            Taro.setStorageSync('money',res.data.data['0'].money);
 
                         },
                     });
@@ -133,10 +140,8 @@ class Index extends Component {
     render() {
         let Item = this.props.foodClass.foodClassList;
         let List = this.props.food.foodList;
-        console.log(this.props.commend.foodList);
         let commend = this.state.commendList;
         return (
-
             <View>
                 <View className="index">
                     <Swiper
@@ -238,7 +243,7 @@ class Index extends Component {
                         </AtTabsPane>
                     </AtTabs>
                 </View>
-
+                <View onClick={this.handleClick3.bind(this)} style='position:fixed;width:100%;bottom:100px'><Bottom></Bottom></View>
                 <View>
 
                     <TabBar tabBarCurrent={0}/>

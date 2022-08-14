@@ -11,14 +11,11 @@ export const findOrderList=(a)=>{
                 'content-type': 'application/json' // 默认值
             },
             success: function (res) {
-                // 调reducer修改数据
-                // console.log("action执行kk",res.data.data)
-                //调用reducer修改数据
-                console.log("action",res.data.data);
-                console.log(a);
+                console.log('执行findfoodfindfoodfindfoodfindfood');
                 dispatch({
                     type: 'searchOrderList',
                     orderList: res.data.data
+
                 })
             }
         })

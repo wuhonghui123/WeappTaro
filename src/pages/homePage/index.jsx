@@ -88,6 +88,11 @@ class My extends Component {
                     url: '/pages/mycomment/index'
                 });
                 break;
+            case '钱包':
+                Taro.navigateTo({
+                    url: '/pages/mycomment/index'
+                });
+                break;
             case '添加评论':
                 Taro.navigateTo({
                     url: '/pages/Addcommend/index'
@@ -118,7 +123,7 @@ class My extends Component {
                 });
                 break;
             case '获取用户地址':
-        
+
     //             wx.chooseLocation({
     //   success: res => {
     //     console.info(res);
@@ -152,7 +157,7 @@ class My extends Component {
             <View>
                 <View className="AtAvatar">
                     <AtAvatar className="at-avatar" circle
-                              image={avatarUrl}></AtAvatar>{name}
+                              image={avatarUrl}></AtAvatar><Text>{name}    {'\n'}  余额:¥{Taro.getStorageSync('money')}</Text>
                 </View>
                 <AtButton className={"login " + hideClass} type='primary' size='small'
                           onClick={this.login.bind(this)}>登录</AtButton>
@@ -161,7 +166,7 @@ class My extends Component {
                     [
                         {
                             image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png',
-                            value: '我的地址'
+                            value: '钱包'
                         },
                         {
                             image: 'https://img20.360buyimg.com/jdphoto/s72x72_jfs/t15151/308/1012305375/2300/536ee6ef/5a411466N040a074b.png',
@@ -173,7 +178,7 @@ class My extends Component {
                         },
                         {
                             image: 'https://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png',
-                            value: '新品首发'
+                            value: '我的地址'
                         },
                         {
                             image: 'https://img14.360buyimg.com/jdphoto/s72x72_jfs/t17251/336/1311038817/3177/72595a07/5ac44618Na1db7b09.png',

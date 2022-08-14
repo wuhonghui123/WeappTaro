@@ -9,8 +9,7 @@ export const findfoodclass=()=>{
                 'content-type': 'application/json' // 默认值
             },
             success: function (res) {
-                // 调reducer修改数据
-                console.log("action执行")
+                console.log('执行findfoodfindfoodfindfoodfindfood');
                 dispatch({type: 'searchFoodClass', foodClassList: res})
             }
         })

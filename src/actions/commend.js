@@ -9,8 +9,7 @@ export const findcommend=()=>{
                 'content-type': 'application/json' // 默认值
             },
             success: function (res) {
-                // 调reducer修改数据
-                console.log("action执行")
+                console.log('执行findcommend');
                 dispatch({type: 'searchCommend', commendList: res})
             }
         })

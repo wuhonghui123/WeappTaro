@@ -13,10 +13,12 @@ class foodinfo extends Component {
     super(...arguments)
     this.state = {
         current: 0,
-        food:JSON.parse(getCurrentInstance().router.params.food)
+        food:JSON.parse(getCurrentInstance().router.params.food),
+        foodcommendList:this.props.commend.foodList
     }
   }
     componentDidMount() {
+        console.log(Taro.getStorageSync('WUHONGHUI'));
     }
     handleClick1=(value)=>{
         console.log(value);
@@ -31,7 +33,7 @@ class foodinfo extends Component {
     })
   }
   render () {
-      let foodcommendList = this.props.commend.foodList
+      let foodcommendList = this.state.foodcommendList
       console.log(this.state.food);
       return (
         <AtTabs
@@ -48,8 +50,8 @@ class foodinfo extends Component {
             <View>{this.state.name}{this.state.food.name}</View>
 
               <Addcut className="addcut" food={this.state.food}></Addcut>
-              <Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text>
-                  <Bottom onClick={this.handleClick1.bind(this)}></Bottom>
+              {/* <Text>{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}{'\n'}</Text> */}
+                  <View onClick={this.handleClick1.bind(this)} style='position:fixed;width:100%;bottom:400px'><Bottom></Bottom></View>
               </View>
 
           </AtTabsPane>

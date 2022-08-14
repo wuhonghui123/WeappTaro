@@ -11,9 +11,7 @@ export const findShopCart=()=>{
                 'content-type': 'application/json' // 默认值
             },
             success: function (res) {
-                // 调reducer修改数据
-                // console.log("action执行kk",res.data.data)
-                //调用reducer修改数据
+                console.log('执行findfoodfindfoodfindfoodfindfood');
                 dispatch({type: 'searchShopCart', shopCartList: res})
             }
         })

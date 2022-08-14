@@ -1,10 +1,12 @@
 import {Component} from "react";
-import {AtCard} from "taro-ui";
-import {Image,Button} from "@tarojs/components";
+import {AtCard, AtModal, AtModalAction, AtModalContent, AtModalHeader} from "taro-ui";
+import {Image, Button, Text} from "@tarojs/components";
 import Taro, {getStorageSync} from "@tarojs/taro";
 import {connect} from "react-redux";
 import {deleteShopCart, findShopCart} from "../../actions/shopcart";
 import {AddOrderFood} from "../../actions/order_food";
+import {getAllFoodInfo} from "../../utils/common";
+import * as events from "events";
 
 
 @connect(({order_food}) => ({order_food}), {AddOrderFood})
@@ -15,13 +17,51 @@ class Pay extends Component {
             IsTransaction:"订单已完成",
             orderList:getStorageSync("shopCart"),
             openid:getStorageSync("openid"),
+            allPrice:0,
+            isOpened:false
         }
     }
-    pay=()=>{
+    whether=()=>{
+        this.setState({isOpened:true})
+    }
+    Cancel=()=>{
+        this.setState({isOpened:false})
+    }
+    pay1=()=>{
+        let money = Taro.getStorageSync('money')
+        Taro.setStorageSync('money',money-this.state.allPrice)
+        console.log("提交订单")
+        Taro.request({
+            url: 'http://127.0.0.1:8095/order/addorder', //仅为示例，并非真实的接口地址
+            method:'POST',
+            data: {
+                user_id:"1",
+                order_price:this.state.allPrice
+            },
+            header: {
+                'content-type': 'application/json' // 默认值
+            },
+
+            success:(res)=>{
+                console.log('订单号',res.data.msg);
+                let orderid = res.data.msg;
+                this.pay(orderid)
+                Taro.setStorageSync('shopCart','')
+            }
+        })
+
+    }
+    pay=(orderid)=>{
         console.log("支付")
         Object.values(this.state.orderList).map((shopCart, index) =>{
-        this.props.AddOrderFood(shopCart)
+        this.props.AddOrderFood(shopCart,orderid)
         })
+    }
+    componentDidMount() {
+        //要获取整体的存储的菜品数据 进行计算
+        // 获取计算好的 设置给state
+        let {allPrice, allNum} = getAllFoodInfo();
+        this.setState({allPrice: allPrice});
     }
 
     render(){
@@ -33,6 +73,7 @@ class Pay extends Component {
                 number=number+1;
                 money=money+shopCart.Num*shopCart.price
                 return(
+
                     <view style="display:flex;flex-direction:row;justify-content:flex-start;height:80px">
                         <Image src={shopCart.food_img} style="width:100px;height:70px;margin-top:10px"/>
                         <view style="width:200px;height:100px;font-size: 15px;margin:25px 0 0 10px;">
@@ -46,6 +87,13 @@ class Pay extends Component {
           })
         return (
             <view>
+                <AtModal isOpened={this.state.isOpened}>
+                    <AtModalHeader>支付</AtModalHeader>
+                    <AtModalContent>
+                       <Text>余额: ¥{Taro.getStorageSync('money')}{'\n'}是否支付</Text>
+                    </AtModalContent>
+                    <AtModalAction> <Button onClick={this.Cancel}>取消</Button> <Button onClick={this.pay1}>确定</Button> </AtModalAction>
+                </AtModal>
                 <view style="width:92%;height:20%;border:1px solid #dee8f1;margin:2% 0 2% 4%;text-align: center;display:none" >
                     <text>
                         {'\n'}
@@ -93,7 +141,7 @@ class Pay extends Component {
                     </view>
                 </view>
                 <view>
-                    <Button onClick={this.pay}>确实支付</Button>
+                    <Button onClick={this.whether}>确实支付</Button>
                 </view>
             </view>
         )
