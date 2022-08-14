@@ -15,7 +15,8 @@ class Order extends Component {
         this.state = {
             current:0,
             orderList:v,
-            orderDetails:[]
+            orderDetails:[],
+            foodList:[]
         }
     }
     handleClick=(value)=>{
@@ -26,30 +27,12 @@ class Order extends Component {
 
     }
     cardClick=(id,user_id)=>{
-        let re;
         Taro.navigateTo({
-            url:'/pages/order/test'
+            url:`/pages/order/test?id=${id}&user_id=${user_id}`
         })
-        Taro.request({
-            url: 'https://g6.glypro19.com/weappapi/order/search', //仅为示例，并非真实的接口地址
-            data: {
-                order_id:id,
-                user_id: user_id
-            },
-            header: {
-                'content-type': 'application/json' // 默认值
-            },
-            success:(res)=>{
-                console.log("action",res.data.data);
-                re=res.data.data;
-                this.setState({
-                    orderDetails:re
-                })
-            }
-        })
-        console.log("&&&",this.state.orderDetails);
     }
-    typeClick=(id,user_id,order_type)=>{
+    typeClick=(id,user_id,order_type,e)=>{
+        e.stopPropagation();
         console.log(id, user_id, order_type);
         if (order_type=='待发货'){
             Taro.request({
@@ -111,7 +94,7 @@ class Order extends Component {
                                       title='翔麟烧烤'
                                       thumb='../../assets/img/1.jpg'>
                                       <view style="display:flex;flex-direction:row;justify-content:flex-start;height:80px">
-                                          <Image src={'../../assets/img/1.jpg'} style="width:100px;height:70px;margin-top:10px"/>
+                                          <Image src='../../assets/img/1.jpg' style="width:100px;height:70px;margin-top:10px"/>
                                           <view style="width:200px;height:100px;font-size: 15px;margin:10px 0 0 10px;">
                                               <text>
                                                   下单时间：{order.create_time}{'\n'}
@@ -120,7 +103,7 @@ class Order extends Component {
                                           </view>
                                       </view>
                                       <view style="width:70px;margin-left:80%;">
-                                          <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
+                                          <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='待收货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                       </view>
                                   </AtCard>
                               </view>
@@ -130,7 +113,7 @@ class Order extends Component {
               </AtTabsPane>
               <AtTabsPane current={this.state.current} index={1} >
                   <View style='background-color: #FAFBFC' >
-                      {this.props.orderList.orderList.map((order,index)=>{
+                      {this.state.orderList.map((order,index)=>{
                           if(order.order_type=='待付款'){
                               return(
                                   <view style="margin-top:10px">
@@ -149,7 +132,7 @@ class Order extends Component {
                                               </view>
                                           </view>
                                           <view style="width:70px;margin-left:80%;">
-                                              <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
+                                              <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='待收货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                           </view>
                                       </AtCard>
                                   </view>
@@ -160,8 +143,8 @@ class Order extends Component {
               </AtTabsPane>
               <AtTabsPane current={this.state.current} index={2} >
                   <View style='background-color: #FAFBFC' >
-                      {this.props.orderList.orderList.map((order,index)=>{
-                          if(order.order_type=='待发货'){
+                      {this.state.orderList.map((order,index)=>{
+                          if(order.order_type=='待收货'||order.order_type=='待发货'){
                               return(
                                   <view style="margin-top:10px">
                                       <AtCard
@@ -179,7 +162,7 @@ class Order extends Component {
                                               </view>
                                           </view>
                                           <view style="width:70px;margin-left:80%;">
-                                              <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
+                                              <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='待收货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                           </view>
                                       </AtCard>
                                   </view>
@@ -190,7 +173,7 @@ class Order extends Component {
               </AtTabsPane>
               <AtTabsPane current={this.state.current} index={3}>
                   <View style='background-color: #FAFBFC' >
-                      {this.props.orderList.orderList.map((order,index)=>{
+                      {this.state.orderList.map((order,index)=>{
                           if(order.order_type=='已完成'){
                               return(
                                   <view style="margin-top:10px">
@@ -209,7 +192,7 @@ class Order extends Component {
                                               </view>
                                           </view>
                                           <view style="width:70px;margin-left:80%;">
-                                              <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
+                                              <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='待收货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                           </view>
                                       </AtCard>
                                   </view>
@@ -220,7 +203,7 @@ class Order extends Component {
               </AtTabsPane>
                   <AtTabsPane current={this.state.current} index={4}>
                       <View style='background-color: #FAFBFC' >
-                          {this.props.orderList.orderList.map((order,index)=>{
+                          {this.state.orderList.map((order,index)=>{
                               if(order.order_type=='待评价'){
                                   return(
                                       <view style="margin-top:10px">
@@ -239,7 +222,7 @@ class Order extends Component {
                                                   </view>
                                               </view>
                                               <view style="width:70px;margin-left:80%;">
-                                                  <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
+                                                  <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='待收货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                               </view>
                                           </AtCard>
                                       </view>
