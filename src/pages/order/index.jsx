@@ -26,10 +26,34 @@ class Order extends Component {
         })
 
     }
+    toMouseTracker(){
+        Taro.navigateTo({
+            url:'/pages/Addcommend/index'
+        })
+    }
     cardClick=(id,user_id)=>{
+        let re;
         Taro.navigateTo({
             url:`/pages/order/test?id=${id}&user_id=${user_id}`
         })
+        Taro.request({
+            url: 'https://g6.glypro19.com/weappapi/order/search', //仅为示例，并非真实的接口地址
+            data: {
+                order_id:id,
+                user_id: user_id
+            },
+            header: {
+                'content-type': 'application/json' // 默认值
+            },
+            success:(res)=>{
+                console.log("action",res.data.data);
+                re=res.data.data;
+                this.setState({
+                    orderDetails:re
+                })
+            }
+        })
+        console.log("&&&",this.state.orderDetails);
     }
     typeClick=(id,user_id,order_type,e)=>{
         e.stopPropagation();
@@ -222,6 +246,9 @@ class Order extends Component {
                                                   </view>
                                               </view>
                                               <view style="width:70px;margin-left:80%;">
+                                              <view style="width:70px;margin-left:80%">
+                                                  <AtButton type='primary' size='small' onClick={this.toMouseTracker}>评价</AtButton>
+                                              </view>
                                                   <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='待收货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                               </view>
                                           </AtCard>

@@ -1,21 +1,18 @@
 import {Component} from 'react'
-import {Text, View} from '@tarojs/components'
-import TabBar from "../common/tabBar";
-import { AtAvatar } from 'taro-ui'
-import { AtGrid } from "taro-ui"
-import Taro from "@tarojs/taro";
-import { AtButton } from 'taro-ui'
-import { AtInput, AtForm } from 'taro-ui'
-import "./index.scss"
 
-export class Addaddress extends Component {
+import "./index.scss"
+import Taro from "@tarojs/taro";
+import {Text, View} from "@tarojs/components";
+import {AtForm, AtInput} from "taro-ui";
+
+export class Editaddress extends Component {
   constructor () {
     super(...arguments)
     this.state = {
-      name: '',
-      phone:'',
-      address:'',
-        user_id:'1'
+      name: Taro.getCurrentInstance().router.params.name,
+      phone:Taro.getCurrentInstance().router.params.phone,
+      address:Taro.getCurrentInstance().router.params.address,
+      id:'1'
     }
   }
   handleChange (name) {
@@ -25,37 +22,29 @@ export class Addaddress extends Component {
   }
   handleChange1 (phone) {
     this.setState({
-        phone
+      phone
     })
   }
   handleChange2 (address) {
     this.setState({
-        address
+      address
     })
   }
   onSubmit (event) {
 
   }
 
-
-  componentWillUnmount() {
-  }
-
-  componentDidShow() {
-  }
-
-  componentDidHide() {
-  }
-handleClick=()=>{
+  handleClick=()=>{
     Taro.request({
-    url: 'http://localhost:8095/address/add',
-    data: this.state,
-        method:"POST",
-    success: function (res) {
-      console.log(res);
-    }
-  })
-}
+      url:'http://localhost:8095/address/update',
+      data:this.state,
+      method:"Post",
+      success: (res)=> {
+        console.log(res);
+      }
+    })
+  }
+
 
   render() {
     return (
@@ -86,16 +75,12 @@ handleClick=()=>{
                 value={this.state.address}
                 onChange={this.handleChange2.bind(this)}
             />
-            {/*<AtButton className="Addaddress" formType='submit'>*/}
-            {/*  <Text className="text" onClick={this.handleClick}>保存</Text>*/}
-            {/*</AtButton>*/}
-              <view className="text" ><Text onClick={this.handleClick}>保存</Text></view>
-
+            <view className="text" ><Text onClick={this.handleClick}>保存</Text></view>
           </AtForm>
         </View>
     )
   }
 }
 
-export default Addaddress
+export default Editaddress
 

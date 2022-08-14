@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  position: fixed;
+  //position: absolute;
   bottom: 10PX;
   left:0;
   height: 60PX;
@@ -62,4 +62,7 @@
       border-radius: 0 50PX 50PX 0;
     }
   }
+}
+.hide{
+  display: none;
 }

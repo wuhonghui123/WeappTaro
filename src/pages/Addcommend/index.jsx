@@ -1,31 +1,46 @@
 import {Component} from 'react'
-import {Text, View} from '@tarojs/components'
-import TabBar from "../common/tabBar";
-import { AtAvatar } from 'taro-ui'
-import { AtGrid } from "taro-ui"
-import Taro from "@tarojs/taro";
-import { AtButton } from 'taro-ui'
+import { AtInput, AtForm,AtButton } from 'taro-ui'
+
+export class Addcommend extends Component {
+    constructor() {
+        super(...arguments)
+        this.state = {
+            value: ''
+        }
+    }
+    handleChange (value) {
+        this.setState({
+            value
+        })
+        return value
+    }
+
+    componentWillUnmount() {
+    }
 
 
-class addcomment extends Component {
-
-  componentWillUnmount() {
-  }
-
-  componentDidShow() {
-  }
-
-  componentDidHide() {
-  }
-
-
-  render() {
-    return (
-      <View>
-      <Text>添加评论</Text>
-      </View>
-    )
-  }
+    render() {
+        return (
+            <AtForm>
+            <AtInput
+                name='value1'
+                title='评论'
+                type='text'
+                placeholder=''
+                value={this.state.value}
+                onChange={this.handleChange.bind(this)}
+            />
+            <AtInput
+                name='value2'
+                title='评论星级'
+                type='number'
+                placeholder=''
+                value={this.state.value}
+                onChange={this.handleChange.bind(this)}
+            />
+                <AtButton type='primary' size='small'>提交</AtButton>
+            </AtForm>
+        )
+    }
 }
-
-export default addcomment
+export default Addcommend
