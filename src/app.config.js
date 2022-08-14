@@ -65,12 +65,6 @@ export default defineAppConfig({
       ]
     },
     {
-      "root": "pages/Addcommend/",
-      "pages": [
-        "index"
-      ]
-    },
-    {
       "root": "pages/Editaddress/",
       "pages": [
         "index"

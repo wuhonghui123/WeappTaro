@@ -26,11 +26,6 @@ class Order extends Component {
         })
 
     }
-    toMouseTracker(){
-        Taro.navigateTo({
-            url:'/pages/Addcommend/index'
-        })
-    }
     cardClick=(id,user_id)=>{
         let re;
         Taro.navigateTo({
@@ -58,7 +53,7 @@ class Order extends Component {
     typeClick=(id,user_id,order_type,e)=>{
         e.stopPropagation();
         console.log(id, user_id, order_type);
-        if (order_type=='待发货'){
+        if (order_type=='待发货'||order_type=='待收货'){
             Taro.request({
                 url: 'https://g6.glypro19.com/weappapi/order/update_type',
                 data: {
@@ -76,6 +71,18 @@ class Order extends Component {
                     })
                 }
             })
+        }else if(order_type=='待评价'){
+            Taro.navigateTo({
+                url:'/pages/Addcommend/index'
+            })
+        }else if(order_type=='待付款'){
+            Taro.navigateTo({
+                url:'/pages/shopCart/pay'
+            })
+        }else if(order_type=='已完成'){
+            Taro.reLaunch({
+                url: '/pages/index/index'
+            });
         }
     }
 
@@ -246,9 +253,6 @@ class Order extends Component {
                                                   </view>
                                               </view>
                                               <view style="width:70px;margin-left:80%;">
-                                              <view style="width:70px;margin-left:80%">
-                                                  <AtButton type='primary' size='small' onClick={this.toMouseTracker}>评价</AtButton>
-                                              </view>
                                                   <AtButton type='primary' size='small' onClick={(e)=>this.typeClick(order.id,order.user_id,order.order_type,e)}>{order.order_type=='待付款'? '去支付':order.order_type=='待发货'?'确认收货':order.order_type=='待收货'?'确认收货':order.order_type=='已完成'?'再来一单':'评价'}</AtButton>
                                               </view>
                                           </AtCard>

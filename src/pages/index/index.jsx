@@ -218,10 +218,11 @@ class Index extends Component {
                                         commend.map((commend,index)=>{
                                             return (
                                                 <AtCard
-                                                    title='用户ID:'
-                                                    extra={commend.commend_id}
+                                                    title={commend.nickName}
+                                                    extra={commend.comments_time}
+                                                    thumb={commend.avatarUrl}>
                                                 >
-                                                    <text>评论：{commend.comments} 日期：{commend.comments_time.substring(0,10)}</text>
+                                                    <text>评论：{commend.comments}</text>
                                                     <AtRate value={commend.stars}/>
                                                 </AtCard>
                                             )
