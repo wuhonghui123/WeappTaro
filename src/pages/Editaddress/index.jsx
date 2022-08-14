@@ -36,7 +36,7 @@ export class Editaddress extends Component {
 
   handleClick=()=>{
     Taro.request({
-      url:'http://localhost:8095/address/update',
+      url:'https://g6.glypro19.com/weappapi/address/update',
       data:this.state,
       method:"Post",
       success: (res)=> {

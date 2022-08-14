@@ -32,7 +32,7 @@ class Pay extends Component {
         Taro.setStorageSync('money',money-this.state.allPrice)
         console.log("提交订单")
         Taro.request({
-            url: 'http://127.0.0.1:8095/order/addorder', //仅为示例，并非真实的接口地址
+            url: 'https://g6.glypro19.com/weappapi/order/addorder', //仅为示例，并非真实的接口地址
             method:'POST',
             data: {
                 user_id:"2",

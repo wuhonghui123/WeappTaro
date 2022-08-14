@@ -22,7 +22,7 @@ class myaddress extends Component {
   }
   componentWillMount(){
     Taro.request({
-      url:'http://localhost:8095/address/get',
+      url:'https://g6.glypro19.com/weappapi/address/get',
       method:"Post",
       header: {
         'content-type': 'application/json' // 默认值
